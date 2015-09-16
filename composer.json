@@ -1,0 +1,31 @@
+{
+    "name": "gigi/yii2-modular",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+          "name": "Alexey Snigirev",
+          "email": "gigi@ua.fm"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "~2.0"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*"
+    },
+    "extra": {
+        "writable": [
+            "runtime",
+            "web/assets"
+        ],
+        "executable": [
+            "yii"
+        ],
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    }
+}
