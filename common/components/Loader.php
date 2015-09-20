@@ -13,7 +13,6 @@ use yii\base\UnknownClassException;
 class Loader implements BootstrapInterface
 {
     private $app;
-    private $config;
 
     /**
      * @param \yii\base\Application $app
@@ -23,8 +22,7 @@ class Loader implements BootstrapInterface
     public function bootstrap($app)
     {
         $this->app = $app;
-        $modulesPath = $this->getModulesPath();
-        $modules = array_diff(scandir($modulesPath), array('..', '.'));
+        $modules = array_diff(scandir($this->getModulesPath()), array('..', '.'));
         $modulesOrder = [];
         foreach ($modules as $module) {
             $className = 'app\modules\\' . $module . '\Module';
@@ -40,7 +38,7 @@ class Loader implements BootstrapInterface
             if (!$app->hasModule($module)) {
                 $app->setModule($module, $className);
             }
-            // add routes and events
+            // configure some properties
             $this->configure($module);
             $modulesOrder[$className] = $className::getBootOrder();
         }
@@ -68,12 +66,19 @@ class Loader implements BootstrapInterface
         return $this->getModulesPath() . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'web.php';
     }
 
+    /**
+     * Configure module
+     * Adds routes and attach events if present
+     *
+     * @param $moduleName
+     */
     private function configure($moduleName)
     {
         $filePath = realpath($this->getConfigFilePath($moduleName));
-        if ($filePath) {
-            $this->config = $config = require($filePath);
+        if (!$filePath) {
+            return;
         }
+        $config = require($filePath);
         if (!empty($config['routes'])) {
             $this->addRoutes($config['routes']);
         }
