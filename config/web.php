@@ -14,10 +14,8 @@ return [
                 'basePath' => '@app/common/themes/basic',
                 'baseUrl' => '@web/themes/basic',
                 'pathMap' => [
-                    '@app/views' => [
-                        '@app/common/themes/basic',
-                        '@app/common/themes/basic2'
-                    ],
+                    '@app/views'   => '@common/themes/basic',
+                    '@app/modules' => '@common/themes/basic/modules',
                 ],
             ],
         ],

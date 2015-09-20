@@ -10,6 +10,9 @@ use \yii\base\Module;
  */
 abstract class BaseModule extends Module implements ModuleBootstrapInterface
 {
+    public $routes;
+    public $events;
+
     /**
      * Boot order is 1000 by default
      * lower bootOrder boots first
@@ -20,5 +23,15 @@ abstract class BaseModule extends Module implements ModuleBootstrapInterface
     public static function getBootOrder()
     {
         return 1000;
+    }
+
+    public function init()
+    {
+        parent::init();
+        $this->layout = 'main';
+        $configPath = realpath($this->getBasePath() . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'web.php');
+        if ($configPath) {
+            \Yii::configure($this, require($configPath));
+        }
     }
 }

@@ -12,8 +12,8 @@ use yii\base\UnknownClassException;
  */
 class Loader implements BootstrapInterface
 {
-    private $_app;
-    private $_modulesPath;
+    private $app;
+    private $config;
 
     /**
      * @param \yii\base\Application $app
@@ -22,7 +22,7 @@ class Loader implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $this->_app = $app;
+        $this->app = $app;
         $modulesPath = $this->getModulesPath();
         $modules = array_diff(scandir($modulesPath), array('..', '.'));
         $modulesOrder = [];
@@ -35,16 +35,16 @@ class Loader implements BootstrapInterface
             // since PHP 5.5
             // if (!isset($interfaces[ModuleBootstrapInterface::class])) {
             if (!isset($interfaces['app\common\ModuleBootstrapInterface'])) {
-                throw new ModuleBootstrapException('Module ' . $className . ' must implement app\common\ModuleBootstrapInterface class');
+                throw new ModuleBootstrapException('Module ' . $className . ' must implement app\common\ModuleBootstrapInterface interface');
             }
             if (!$app->hasModule($module)) {
                 $app->setModule($module, $className);
             }
-            $this->setRoutes($module);
+            // add routes and events
+            $this->configure($module);
             $modulesOrder[$className] = $className::getBootOrder();
         }
         asort($modulesOrder);
-
         foreach ($modulesOrder as $className => $order) {
             $className::bootstrap($app);
         }
@@ -53,31 +53,50 @@ class Loader implements BootstrapInterface
     /**
      * Returns modules path
      *
-     * @param $app
      * @return string
      */
     private function getModulesPath()
     {
-        return $this->_modulesPath = $this->_app->basePath . DIRECTORY_SEPARATOR . 'modules';
+        return $this->app->basePath . DIRECTORY_SEPARATOR . 'modules';
     }
 
     /**
-     * Default path for module routes is modules/MODULE_NAME/config/routes.php
+     * Default path for module routes is modules/MODULE_NAME/config/web.php
      */
-    private function getRoutesFile($module)
+    private function getConfigFilePath($moduleName)
     {
-        return $this->_modulesPath . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'routes.php';
+        return $this->getModulesPath() . DIRECTORY_SEPARATOR . $moduleName . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'web.php';
+    }
+
+    private function configure($moduleName)
+    {
+        $filePath = realpath($this->getConfigFilePath($moduleName));
+        if ($filePath) {
+            $this->config = $config = require($filePath);
+        }
+        if (!empty($config['routes'])) {
+            $this->addRoutes($config['routes']);
+        }
+        if (!empty($config['events'])) {
+            $this->attachEvents($config['events']);
+        }
     }
 
     /**
      * Helper to load custom module routes if present in config/routes.php
      */
-    private function setRoutes($module)
+    private function addRoutes($routes)
     {
-        $routesPath = $this->getRoutesFile($module);
-        if (realpath($routesPath)) {
-            $routes = require($routesPath);
-            $this->_app->getUrlManager()->addRules($routes);
+        $this->app->getUrlManager()->addRules($routes);
+    }
+
+    /**
+     * Helper to load events
+     */
+    private function attachEvents(array $events)
+    {
+        foreach ($events as $event => $handler) {
+            $this->app->on($event, $handler);
         }
     }
 }

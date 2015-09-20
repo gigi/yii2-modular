@@ -15,13 +15,13 @@ interface ModuleBootstrapInterface
      * Will be executed on app start without creating module class instance
      *
      * @param $app object current Yii::app() instance
-     * @return bool if false - throws ModuleBootstrapException
+     * @return bool if false app\common\components\Loader stops load the app and throws ModuleBootstrapException
      */
     public static function bootstrap($app);
 
     /**
      * Boot order for module
-     * @return mixed
+     * @return int
      */
     public static function getBootOrder();
 }

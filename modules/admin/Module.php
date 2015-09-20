@@ -11,7 +11,6 @@ class Module extends BaseModule
 {
     public static function bootstrap($app)
     {
-        echo 'Hello from admin module bt';
         return true;
     }
 
