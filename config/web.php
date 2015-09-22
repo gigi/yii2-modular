@@ -5,8 +5,15 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'app\common\controllers',
     'bootstrap' => [
+        'debug',
         'log',
         'app\common\components\Loader'
+    ],
+    'modules' => [
+        'debug' => [
+            'class' => 'yii\debug\Module',
+            'allowedIPs' => ['*']
+        ],
     ],
     'components' => [
         'view' => [

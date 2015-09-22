@@ -8,11 +8,6 @@ use app\common\BaseModule;
  */
 class Module extends BaseModule
 {
-    public static function bootstrap($app)
-    {
-        return true;
-    }
-
     public function init()
     {
         parent::init();

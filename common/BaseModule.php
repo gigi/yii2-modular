@@ -13,6 +13,11 @@ abstract class BaseModule extends Module implements ModuleBootstrapInterface
     public $routes;
     public $events;
 
+    public static function bootstrap($app)
+    {
+        return true;
+    }
+
     /**
      * Boot order is 1000 by default
      * lower bootOrder boots first

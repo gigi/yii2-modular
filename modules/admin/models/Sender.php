@@ -8,6 +8,6 @@ class Sender extends BaseModel {
 
     public function emailHandler($event)
     {
-        var_dump($event->sender);
+       //($event->sender);
     }
 }

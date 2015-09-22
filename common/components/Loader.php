@@ -59,7 +59,10 @@ class Loader implements BootstrapInterface
     }
 
     /**
-     * Default path for module routes is modules/MODULE_NAME/config/web.php
+     * Default path for module config is modules/MODULE_NAME/config/web.php
+     *
+     * @param string $moduleName
+     * @return string
      */
     private function getConfigFilePath($moduleName)
     {
@@ -70,7 +73,7 @@ class Loader implements BootstrapInterface
      * Configure module
      * Adds routes and attach events if present
      *
-     * @param $moduleName
+     * @param string $moduleName
      */
     private function configure($moduleName)
     {
@@ -88,15 +91,19 @@ class Loader implements BootstrapInterface
     }
 
     /**
-     * Helper to load custom module routes if present in config/routes.php
+     * Helper to add global app routes
+     *
+     * @param array $routes
      */
-    private function addRoutes($routes)
+    private function addRoutes(array $routes)
     {
         $this->app->getUrlManager()->addRules($routes);
     }
 
     /**
-     * Helper to load events
+     * Helper to attach global app events
+     *
+     * @param array $events
      */
     private function attachEvents(array $events)
     {
