@@ -1,12 +1,11 @@
 <?php
-namespace app\modules\site;
 
-use app\common\BaseModule;
+namespace modules\site;
 
 /**
  * Basic site module class
  */
-class Module extends BaseModule
+class Module extends \common\base\Module
 {
     public function init()
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\common\components;
+namespace common\components;
 
-use yii\base\BootstrapInterface;
-use app\common\exceptions\ModuleBootstrapException;
-use yii\base\UnknownClassException;
+use \yii\base\BootstrapInterface;
+use \common\exceptions\ModuleBootstrapException;
+use \yii\base\UnknownClassException;
 
 /**
  * Basic Module loader class
@@ -25,15 +25,15 @@ class Loader implements BootstrapInterface
         $modules = array_diff(scandir($this->getModulesPath()), array('..', '.'));
         $modulesOrder = [];
         foreach ($modules as $module) {
-            $className = 'app\modules\\' . $module . '\Module';
+            $className = 'modules\\' . $module . '\Module';
             if (!class_exists($className)) {
                 throw new UnknownClassException('Can\'t load module ' . $className);
             }
             $interfaces = class_implements($className);
             // since PHP 5.5
             // if (!isset($interfaces[ModuleBootstrapInterface::class])) {
-            if (!isset($interfaces['app\common\ModuleBootstrapInterface'])) {
-                throw new ModuleBootstrapException('Module ' . $className . ' must implement app\common\ModuleBootstrapInterface interface');
+            if (!isset($interfaces['common\interfaces\ModuleBootstrapInterface'])) {
+                throw new ModuleBootstrapException('Module ' . $className . ' must implement common\ModuleBootstrapInterface interface');
             }
             if (!$app->hasModule($module)) {
                 $app->setModule($module, $className);

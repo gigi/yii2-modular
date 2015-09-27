@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace modules\admin\controllers;
 
-use app\common\BaseController;
+use common\base\Controller;
 
 use Yii;
 use yii\base\Event;
@@ -11,7 +11,7 @@ use yii\base\Event;
  * Class IndexController
  * @package app\modules\admin\controllers
  */
-class IndexController extends BaseController
+class IndexController extends Controller
 {
     /**
      * @return string

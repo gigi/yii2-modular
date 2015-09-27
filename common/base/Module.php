@@ -1,18 +1,21 @@
 <?php
 
-namespace app\common;
+namespace common\base;
 
-use \yii\base\Module;
+use \common\interfaces\ModuleBootstrapInterface;
 
 /**
  * Class BaseModule
  * @package app\common
  */
-abstract class BaseModule extends Module implements ModuleBootstrapInterface
+abstract class Module extends \yii\base\Module implements ModuleBootstrapInterface
 {
     public $routes;
     public $events;
 
+    /**
+     * @inheritdoc
+     */
     public static function bootstrap($app)
     {
         return true;

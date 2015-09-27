@@ -1,10 +1,10 @@
 <?php
 
-namespace app\common;
+namespace common\interfaces;
 
 /**
  * Interface ModuleBootstrapInterface
- * @package app\common
+ * @package common
  */
 interface ModuleBootstrapInterface
 {
@@ -14,8 +14,8 @@ interface ModuleBootstrapInterface
      * You can attach events or configure routes here
      * Will be executed on app start without creating module class instance
      *
-     * @param $app object current Yii::app() instance
-     * @return bool if false app\common\components\Loader stops load the app and throws ModuleBootstrapException
+     * @param object $app object current Yii::app() instance
+     * @return bool - if false common\components\Loader stops load the app and throws ModuleBootstrapException
      */
     public static function bootstrap($app);
 

@@ -1,13 +1,30 @@
 <?php
-// Main app config
+// merge db local config with global
+$db = require(__DIR__ . '/db.php');
+if (file_exists(__DIR__ . '/local/db.php')) {
+    $db = yii\helpers\ArrayHelper::merge(
+        $db,
+        require(__DIR__ . '/local/db.php')
+    );
+}
+
+// merge params local config with global
+$params = require(__DIR__ . '/params.php');
+if (file_exists(__DIR__ . '/local/params.php')) {
+    $params = yii\helpers\ArrayHelper::merge(
+        $params,
+        require(__DIR__ . '/local/params.php')
+    );
+}
+
 return [
     'id' => 'Base',
     'basePath' => dirname(__DIR__),
-    'controllerNamespace' => 'app\common\controllers',
+    'controllerNamespace' => 'common\controllers',
     'bootstrap' => [
         'debug',
         'log',
-        'app\common\components\Loader'
+        'common\components\Loader'
     ],
     'modules' => [
         'debug' => [
@@ -16,6 +33,7 @@ return [
         ],
     ],
     'components' => [
+        'db' => $db,
         'view' => [
             'theme' => [
                 'basePath' => '@app/common/themes/basic',
@@ -27,7 +45,7 @@ return [
             ],
         ],
         'user' => [
-            'identityClass' => 'app\common\models\User',
+            'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => '/login'
         ],
@@ -61,5 +79,6 @@ return [
                 ],
             ],
         ],
-    ]
+    ],
+    'params' => $params
 ];

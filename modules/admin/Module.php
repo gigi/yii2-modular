@@ -1,13 +1,11 @@
 <?php
 
-namespace app\modules\admin;
-
-use app\common\BaseModule;
+namespace modules\admin;
 
 /**
  * General admin module
  */
-class Module extends BaseModule
+class Module extends \common\base\Module
 {
     public function init()
     {

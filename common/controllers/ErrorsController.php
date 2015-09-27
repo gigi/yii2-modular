@@ -1,9 +1,10 @@
 <?php
 
-namespace app\common\controllers;
-use app\common\BaseController;
+namespace common\controllers;
 
-class ErrorsController extends BaseController
+use common\base\Controller;
+
+class ErrorsController extends Controller
 {
     public function actions()
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\admin\models;
+namespace modules\admin\models;
 
-use app\common\BaseModel;
+use common\base\Model;
 
-class Sender extends BaseModel {
+class Sender extends Model {
 
     public function emailHandler($event)
     {

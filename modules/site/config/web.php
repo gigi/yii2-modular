@@ -6,6 +6,7 @@ return [
      * 'layout' => '//main'
      */
     'routes' => [
-        '' => 'site/index'
+        '' => 'site/index',
+        '<action:(login|logout|register|forgotten)>' => 'site/index/<action>',
     ],
 ];

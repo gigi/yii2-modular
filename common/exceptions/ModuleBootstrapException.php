@@ -1,6 +1,6 @@
 <?php
 
-namespace app\common\exceptions;
+namespace common\exceptions;
 
 use yii\base\Exception;
 
