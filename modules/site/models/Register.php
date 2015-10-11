@@ -2,7 +2,9 @@
 
 namespace modules\site\models;
 
-use common\models\User;
+use common\events\Events;
+use common\events\UserRegisterEvent;
+use common\models\UserRecord as User;
 use yii\base\Model;
 use Yii;
 
@@ -26,7 +28,7 @@ class Register extends Model
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique',
-                'targetClass' => '\common\models\User',
+                'targetClass' => '\common\models\UserRecord',
                 'targetAttribute' => 'email',
                 'filter' => ['not', ['status' => User::STATUS_NEW]],
                 'message' => 'This email address has already been taken.'
@@ -45,7 +47,9 @@ class Register extends Model
             $user = new User();
             $user->email = $this->email;
             $user->generateAuthKey();
+
             if ($user->save()) {
+                Yii::$app->trigger(Events::USER_PRE_REGISTER, new UserRegisterEvent($user));
                 return $user;
             }
         }

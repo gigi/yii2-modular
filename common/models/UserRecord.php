@@ -2,8 +2,10 @@
 namespace common\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 use yii\web\IdentityInterface;
 
 /**
@@ -17,7 +19,7 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property string $password write-only password
  */
-class User extends \common\base\ActiveRecord implements IdentityInterface
+class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = -2;
     const STATUS_BANNED = -1;
@@ -41,7 +43,8 @@ class User extends \common\base\ActiveRecord implements IdentityInterface
             [
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created',
-                'updatedAtAttribute' => 'updated'
+                'updatedAtAttribute' => 'updated',
+                'value' => new Expression('NOW()')
             ]
         ];
     }
@@ -115,13 +118,7 @@ class User extends \common\base\ActiveRecord implements IdentityInterface
      */
     public static function isPasswordResetTokenValid($token)
     {
-        if (empty($token)) {
-            return false;
-        }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        return $timestamp + $expire >= time();
     }
 
     /**

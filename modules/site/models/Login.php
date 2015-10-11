@@ -3,7 +3,7 @@ namespace modules\site\models;
 
 use Yii;
 use common\base\Model;
-use common\models\User;
+use common\models\UserRecord as User;
 
 /**
  * Login form

@@ -2,9 +2,9 @@
 
 namespace common\components;
 
+use common\exceptions\ModuleUndefinedClassException;
 use \yii\base\BootstrapInterface;
 use \common\exceptions\ModuleBootstrapException;
-use \yii\base\UnknownClassException;
 
 /**
  * Basic Module loader class
@@ -17,7 +17,7 @@ class Loader implements BootstrapInterface
     /**
      * @param \yii\base\Application $app
      * @throws ModuleBootstrapException
-     * @throws UnknownClassException
+     * @throws ModuleUndefinedClassException
      */
     public function bootstrap($app)
     {
@@ -27,7 +27,7 @@ class Loader implements BootstrapInterface
         foreach ($modules as $module) {
             $className = 'modules\\' . $module . '\Module';
             if (!class_exists($className)) {
-                throw new UnknownClassException('Can\'t load module ' . $className);
+                throw new ModuleUndefinedClassException('Can\'t load module ' . $className);
             }
             $interfaces = class_implements($className);
             // since PHP 5.5

@@ -29,7 +29,7 @@ return [
     'modules' => [
         'debug' => [
             'class' => 'yii\debug\Module',
-            'allowedIPs' => ['*']
+            'allowedIPs' => ['127.0.0.1']
         ],
     ],
     'components' => [
@@ -45,7 +45,7 @@ return [
             ],
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\UserRecord',
             'enableAutoLogin' => true,
             'loginUrl' => '/login'
         ],
@@ -57,6 +57,10 @@ return [
             ],
             'timeout' => 3600 * 24 * 10,
             'useCookies' => true,
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => true
         ],
         'urlManager' => require(__DIR__ . '/urlManager.php'),
         'request' => [
