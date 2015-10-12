@@ -12,6 +12,16 @@ use \common\exceptions\ModuleBootstrapException;
  */
 class Loader implements BootstrapInterface
 {
+    /**
+     * Default boot order
+     * To override add 'bootOrder' => VALUE param to config/web.php
+     * Lower value loads first
+     */
+    const BOOT_ORDER_DEFAULT = 1000;
+
+    /**
+     * @var $app object current Yii instance
+     */
     private $app;
 
     /**
@@ -39,8 +49,9 @@ class Loader implements BootstrapInterface
                 $app->setModule($module, $className);
             }
             // configure some properties
-            $this->configure($module);
-            $modulesOrder[$className] = $className::getBootOrder();
+            $config = $this->getConfig($module);
+            $this->configure($config);
+            $modulesOrder[$className] = isset($config['bootOrder']) ? (int)$config['bootOrder'] : self::BOOT_ORDER_DEFAULT;
         }
         asort($modulesOrder);
         foreach ($modulesOrder as $className => $order) {
@@ -70,18 +81,28 @@ class Loader implements BootstrapInterface
     }
 
     /**
-     * Configure module
-     * Adds routes and attach events if present
+     * Returns config for module
      *
-     * @param string $moduleName
+     * @param $moduleName
+     * @return array
      */
-    private function configure($moduleName)
+    public function getConfig($moduleName)
     {
         $filePath = realpath($this->getConfigFilePath($moduleName));
         if (!$filePath) {
-            return;
+            return [];
         }
-        $config = require($filePath);
+        return require($filePath);
+    }
+
+    /**
+     * Configure module
+     * Adds routes and attach events if present
+     *
+     * @param string $config
+     */
+    private function configure($config)
+    {
         if (!empty($config['routes'])) {
             $this->addRoutes($config['routes']);
         }

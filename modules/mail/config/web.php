@@ -1,7 +1,11 @@
 <?php
 
 return [
+    'mailer' => [
+        'class' => 'yii\swiftmailer\Mailer',
+        'useFileTransport' => true
+    ],
     'events' => [
-        common\events\Events::USER_PRE_REGISTER => ['modules\mail\models\Sender', 'sendConfirmEmail']
+        'email.send' => ['modules\mail\models\Sender', 'send']
     ]
 ];

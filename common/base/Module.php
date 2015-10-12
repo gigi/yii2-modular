@@ -21,18 +21,6 @@ abstract class Module extends \yii\base\Module implements ModuleBootstrapInterfa
         return true;
     }
 
-    /**
-     * Boot order is 1000 by default
-     * lower bootOrder boots first
-     * You can override the return value in the Module class
-     *
-     * @return int
-     */
-    public static function getBootOrder()
-    {
-        return 1000;
-    }
-
     public function init()
     {
         parent::init();

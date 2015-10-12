@@ -7,8 +7,4 @@ namespace modules\site;
  */
 class Module extends \common\base\Module
 {
-    public function init()
-    {
-        parent::init();
-    }
 }

@@ -18,10 +18,4 @@ interface ModuleBootstrapInterface
      * @return bool - if false common\components\Loader stops load the app and throws ModuleBootstrapException
      */
     public static function bootstrap($app);
-
-    /**
-     * Boot order for module
-     * @return int
-     */
-    public static function getBootOrder();
 }

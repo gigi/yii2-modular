@@ -2,15 +2,16 @@
 
 namespace modules\mail\models;
 
-use common\components\Email;
-use common\events\UserRegisterEvent;
+//use common\components\Email;
 
 class Sender extends \common\base\Model
 {
-    public function sendConfirmEmail(UserRegisterEvent $event)
+    /**
+     * @param Email $message
+     */
+    public function send($event)
     {
-        $mail = new Email();
-        $mail->setTo($event->user->email);
-        $mail->send();
+       // $mail = new Email($message);
+        $event->sender->send();
     }
 }

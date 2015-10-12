@@ -58,10 +58,6 @@ return [
             'timeout' => 3600 * 24 * 10,
             'useCookies' => true,
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'useFileTransport' => true
-        ],
         'urlManager' => require(__DIR__ . '/urlManager.php'),
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
