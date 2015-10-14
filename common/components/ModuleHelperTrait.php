@@ -19,7 +19,7 @@ trait ModuleHelperTrait
     {
         $class = get_called_class();
         $parts = explode("\\", $class, 3);
-        if (!isset($parts[1])) {
+        if (!isset($parts[0]) || $parts[0] !== 'modules' || !isset($parts[1])) {
             throw new InvalidValueException('Invalid namespace ' . $class);
         }
 
