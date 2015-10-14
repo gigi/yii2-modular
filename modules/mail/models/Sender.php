@@ -6,12 +6,10 @@ namespace modules\mail\models;
 
 class Sender extends \common\base\Model
 {
-    /**
-     * @param Email $message
-     */
-    public function send($event)
+    public static function send($event)
     {
-       // $mail = new Email($message);
-        $event->sender->send();
+        $mail = static::getModule()->mailer->compose();
+        $mail->setTo($event->to);
+        return $mail->send();
     }
 }

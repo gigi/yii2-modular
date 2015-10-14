@@ -2,7 +2,7 @@
 
 namespace modules\mediator;
 
-use common\base\Event;
+use modules\mediator\events\EmailEvent;
 
 /**
  * Module implements the Mediator pattern
@@ -14,11 +14,12 @@ use common\base\Event;
  */
 class Module extends \common\base\Module
 {
-    /*==========================================*/
-    public function sendConfirmEmail($event)
+    const EVENT_SEND_MESSAGE = 'email.send';
+
+    public function sendConfirmEmail($userEvent)
     {
-        $message = \Yii::$app->mailer->compose();
-        $message->setTo($event->user->email);
-        \Yii::$app->trigger('email.send', new Event(['sender' => $message]));
+        $event = new EmailEvent();
+        $event->to = $userEvent->user->email;
+        static::sendMessage(self::EVENT_SEND_MESSAGE, $event);
     }
 }

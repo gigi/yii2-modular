@@ -3,6 +3,7 @@
 namespace common\base;
 
 use \common\interfaces\ModuleBootstrapInterface;
+use yii\base\Event;
 
 /**
  * Class BaseModule
@@ -29,5 +30,15 @@ abstract class Module extends \yii\base\Module implements ModuleBootstrapInterfa
         if ($configPath) {
             \Yii::configure($this, require($configPath));
         }
+    }
+
+    /**
+     * Wrapper for event trigger
+     *
+     * @param $message
+     * @param Event $event
+     */
+    public function sendMessage($message, Event $event) {
+        \Yii::$app->trigger($message, $event);
     }
 }

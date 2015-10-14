@@ -4,8 +4,7 @@ namespace modules\site\models;
 
 use common\events\UserEvent;
 use common\models\UserRecord as User;
-use yii\base\Exception;
-use yii\base\Model;
+use common\base\Model;
 use Yii;
 
 /**
@@ -13,7 +12,7 @@ use Yii;
  */
 class Register extends Model
 {
-    const EVENT_USER_REGISTER   = 'user.register';
+    const EVENT_USER_REGISTER   = 'mediator.user.register';
 
     public $username;
     public $email;
@@ -39,10 +38,9 @@ class Register extends Model
     }
 
     /**
-     * Signs user up.
+     * User's signs up.
      *
      * @return User|null the saved model or null if saving fails
-     * @throws UserUnableRegisterException
      */
     public function register()
     {
@@ -52,7 +50,7 @@ class Register extends Model
             $user->generateAuthKey();
 
             if ($user->save()) {
-                \Yii::$app->trigger(self::EVENT_USER_REGISTER, new UserEvent($user));
+                static::getModule()->sendMessage(self::EVENT_USER_REGISTER, new UserEvent($user));
                 return $user;
             }
         }

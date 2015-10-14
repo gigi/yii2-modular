@@ -1,9 +1,8 @@
 <?php
 
-namespace modules\admin;
-
+namespace modules\log;
 /**
- * General admin module
+ * App-level log module
  */
 class Module extends \common\base\Module
 {
