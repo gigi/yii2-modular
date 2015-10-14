@@ -57,6 +57,7 @@ class IndexController extends ModuleController
     public function actionIndex()
     {
         $model = new Login();
+
         return $this->render('index', compact('model'));
     }
 }

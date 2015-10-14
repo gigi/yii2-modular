@@ -15,11 +15,11 @@ trait ModuleHelperTrait
      * Uses Yii lazy loading mechanism
      * @return null|\common\base\Module
      */
-    public static function getModule()
+    public static function getCurrentModule()
     {
         $class = get_called_class();
         $parts = explode("\\", $class, 3);
-        if(!isset($parts[1])) {
+        if (!isset($parts[1])) {
             throw new InvalidValueException('Invalid namespace ' . $class);
         }
 

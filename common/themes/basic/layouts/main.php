@@ -4,8 +4,7 @@
 /* @var $content string */
 
 
-
 ?>
 Common layout
 
-<?=$content?>
+<?= $content ?>

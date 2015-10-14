@@ -92,6 +92,7 @@ class Loader implements BootstrapInterface
         if (!$filePath) {
             return [];
         }
+
         return require($filePath);
     }
 

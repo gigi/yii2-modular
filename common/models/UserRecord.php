@@ -56,12 +56,16 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
     {
         return [
             ['status', 'default', 'value' => self::STATUS_NEW],
-            ['status', 'in', 'range' => [
-                self::STATUS_BANNED,
-                self::STATUS_DELETED,
-                self::STATUS_ACTIVE,
-                self::STATUS_NEW
-            ]],
+            [
+                'status',
+                'in',
+                'range' => [
+                    self::STATUS_BANNED,
+                    self::STATUS_DELETED,
+                    self::STATUS_ACTIVE,
+                    self::STATUS_NEW
+                ]
+            ],
         ];
     }
 

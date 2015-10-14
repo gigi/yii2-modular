@@ -2,6 +2,8 @@
 
 namespace common\base;
 
+use common\components\Loader;
+use common\components\ModuleHelperTrait;
 use \common\interfaces\ModuleBootstrapInterface;
 use yii\base\Event;
 
@@ -11,8 +13,11 @@ use yii\base\Event;
  */
 abstract class Module extends \yii\base\Module implements ModuleBootstrapInterface
 {
+    use ModuleHelperTrait;
+
     public $routes;
     public $events;
+    public $bootOrder = Loader::BOOT_ORDER_DEFAULT;
 
     /**
      * @inheritdoc
@@ -38,7 +43,8 @@ abstract class Module extends \yii\base\Module implements ModuleBootstrapInterfa
      * @param $message
      * @param Event $event
      */
-    public function sendMessage($message, Event $event) {
+    public function sendMessage($message, Event $event)
+    {
         \Yii::$app->trigger($message, $event);
     }
 }

@@ -8,8 +8,9 @@ class Sender extends \common\base\Model
 {
     public static function send($event)
     {
-        $mail = static::getModule()->mailer->compose();
+        $mail = static::getCurrentModule()->mailer->compose();
         $mail->setTo($event->to);
+
         return $mail->send();
     }
 }

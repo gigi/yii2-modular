@@ -1,5 +1,5 @@
 EMAIL LAYOUT start
 
-<?=$content?>
+<?= $content ?>
 
 EMAIL LAYOUT finish

@@ -12,7 +12,7 @@ use Yii;
  */
 class Register extends Model
 {
-    const EVENT_USER_REGISTER   = 'mediator.user.register';
+    const EVENT_USER_REGISTER = 'mediator.user.register';
 
     public $username;
     public $email;
@@ -28,13 +28,15 @@ class Register extends Model
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique',
+            [
+                'email',
+                'unique',
                 'targetClass' => '\common\models\UserRecord',
                 'targetAttribute' => 'email',
                 'filter' => ['not', ['status' => User::STATUS_NEW]],
                 'message' => 'This email address has already been taken.'
             ],
-       ];
+        ];
     }
 
     /**
@@ -50,7 +52,8 @@ class Register extends Model
             $user->generateAuthKey();
 
             if ($user->save()) {
-                static::getModule()->sendMessage(self::EVENT_USER_REGISTER, new UserEvent($user));
+                static::getCurrentModule()->sendMessage(self::EVENT_USER_REGISTER, new UserEvent($user));
+
                 return $user;
             }
         }

@@ -1,6 +1,7 @@
 <?php
 
 namespace modules\log;
+
 /**
  * App-level log module
  */

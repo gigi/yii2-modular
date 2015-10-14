@@ -16,10 +16,10 @@ class Module extends \common\base\Module
 {
     const EVENT_SEND_MESSAGE = 'email.send';
 
-    public function sendConfirmEmail($userEvent)
+    public static function sendConfirmEmail($userEvent)
     {
         $event = new EmailEvent();
         $event->to = $userEvent->user->email;
-        static::sendMessage(self::EVENT_SEND_MESSAGE, $event);
+        static::getCurrentModule()->sendMessage(self::EVENT_SEND_MESSAGE, $event);
     }
 }

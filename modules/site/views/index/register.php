@@ -7,6 +7,7 @@ use yii\bootstrap\ActiveForm;
 
 <div class="site-register">
     <h1><?= Html::encode($this->title) ?></h1>
+
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['action' => ['/register']]); ?>
