@@ -6,10 +6,12 @@ namespace modules\mail\models;
 
 class Sender extends \common\base\Model
 {
+
     public static function send($event)
     {
-        $mail = static::getCurrentModule()->mailer->compose();
+        $mail = static::getCurrentModule()->mailer->compose($event->template, $event->params);
         $mail->setTo($event->to);
+        $mail->setSubject('Confirm registration');
 
         return $mail->send();
     }

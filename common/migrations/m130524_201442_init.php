@@ -12,7 +12,7 @@ class m130524_201442_init extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%user}}', [
+        $this->createTable('{{%users}}', [
             'id' => $this->primaryKey(),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
@@ -23,11 +23,11 @@ class m130524_201442_init extends Migration
             'updated' => $this->dateTime()
         ], $tableOptions);
 
-        $this->createIndex('idx_email', '{{%user}}', 'email, status');
+        $this->createIndex('idx_email', '{{%users}}', 'email, status');
     }
 
     public function down()
     {
-        $this->dropTable('{{%user}}');
+        $this->dropTable('{{%users}}');
     }
 }

@@ -31,7 +31,7 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%users}}';
     }
 
     /**
@@ -100,9 +100,10 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
      * Finds user by password reset token
      *
      * @param string $token password reset token
+     * @param int $status user status
      * @return static|null
      */
-    public static function findByPasswordResetToken($token)
+    public static function findByPasswordResetToken($token, $status = self::STATUS_ACTIVE)
     {
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
@@ -110,7 +111,7 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            'status' => $status,
         ]);
     }
 
@@ -122,7 +123,7 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
      */
     public static function isPasswordResetTokenValid($token)
     {
-
+        return true;
     }
 
     /**
@@ -192,5 +193,21 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * Sets users status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * Makes user active
+     */
+    public function setActive()
+    {
+        $this->setStatus(self::STATUS_ACTIVE);
     }
 }

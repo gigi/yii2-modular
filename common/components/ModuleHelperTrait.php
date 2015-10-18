@@ -13,6 +13,7 @@ trait ModuleHelperTrait
     /**
      * Returns current module instance by class namespace
      * Uses Yii lazy loading mechanism
+     *
      * @return null|\common\base\Module
      */
     public static function getCurrentModule()

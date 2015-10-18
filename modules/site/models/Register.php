@@ -6,6 +6,7 @@ use common\events\UserEvent;
 use common\models\UserRecord as User;
 use common\base\Model;
 use Yii;
+use yii\base\InvalidParamException;
 
 /**
  * Register model
@@ -50,12 +51,23 @@ class Register extends Model
             $user = new User();
             $user->email = $this->email;
             $user->generateAuthKey();
-
+            $user->generatePasswordResetToken();
             if ($user->save()) {
                 static::getCurrentModule()->sendMessage(self::EVENT_USER_REGISTER, new UserEvent($user));
 
                 return $user;
             }
         }
+    }
+
+    public function confirm($token)
+    {
+        $user = User::findByPasswordResetToken($token, User::STATUS_NEW);
+        if (!$user) {
+            throw new InvalidParamException('Wrong confirm token.');
+        }
+        $user->setActive(User::STATUS_ACTIVE);
+
+        return $user->save(false);
     }
 }

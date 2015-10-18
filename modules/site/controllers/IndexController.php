@@ -5,6 +5,8 @@ namespace modules\site\controllers;
 use modules\site\models\Login;
 use modules\site\models\Register;
 use modules\site\components\ModuleController;
+use yii\base\InvalidParamException;
+use yii\web\BadRequestHttpException;
 
 /**
  * Class IndexController
@@ -52,6 +54,18 @@ class IndexController extends ModuleController
     public function actionForgotten()
     {
         echo 'Forgotten';
+    }
+
+    public function actionConfirm($token)
+    {
+        $model = new Register();
+        try {
+            $model->confirm($token);
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+
     }
 
     public function actionIndex()
