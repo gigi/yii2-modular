@@ -2,11 +2,10 @@
 
 namespace modules\site\controllers;
 
+use modules\site\models\Confirm;
 use modules\site\models\Login;
 use modules\site\models\Register;
 use modules\site\components\ModuleController;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
 
 /**
  * Class IndexController
@@ -24,7 +23,7 @@ class IndexController extends ModuleController
         if ($model->load(\Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            return $this->render('index', [
+            return $this->render('login', [
                 'model' => $model,
             ]);
         }
@@ -32,7 +31,8 @@ class IndexController extends ModuleController
 
     public function actionLogout()
     {
-        echo 'Logout';
+        Login::logout();
+        return $this->goHome();
     }
 
     public function actionRegister()
@@ -41,7 +41,10 @@ class IndexController extends ModuleController
         if ($model->load(\Yii::$app->request->post())) {
             if ($user = $model->register()) {
                 if (\Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+                    return $this->render('register', [
+                        'model' => $model,
+                        'needConfirmation' => true
+                    ]);
                 }
             }
         }
@@ -58,20 +61,16 @@ class IndexController extends ModuleController
 
     public function actionConfirm($token)
     {
-        $model = new Register();
-        try {
-            $model->confirm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
+        $model = new Confirm($token);
+        if ($model->load(\Yii::$app->request->post()) && $model->validate() && $model->confirm()) {
+            return $this->goBack();
         }
 
-
+        return $this->render('confirm', compact('model'));
     }
 
     public function actionIndex()
     {
-        $model = new Login();
-
-        return $this->render('index', compact('model'));
+        return $this->render('index');
     }
 }

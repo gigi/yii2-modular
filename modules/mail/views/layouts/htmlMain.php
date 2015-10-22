@@ -1,4 +1,4 @@
-EMAIL TEXT LAYOUT start
+EMAIL HTML LAYOUT start
 
 <?=$content?>
 

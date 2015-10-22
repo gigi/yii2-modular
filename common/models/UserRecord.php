@@ -87,13 +87,32 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
 
     /**
      * Finds user by email
-     *
      * @param string $email
+     * @param int $status
      * @return static|null
      */
-    public static function findByEmail($email)
+    public static function findByEmail($email, $status = self::STATUS_ACTIVE)
     {
-        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne([
+            'email' => $email,
+            'status' => $status
+        ]);
+    }
+
+    /**
+     * Resets attempts of inactive user registrations with the same email
+     * @param $email
+     * @return bool
+     */
+    public static function removeTokenByEmail($email)
+    {
+        $result = static::updateAll([
+            'password_reset_token' => null
+        ], [
+            'email' => $email
+        ]);
+
+        return $result >= 0 ? true : false;
     }
 
     /**
@@ -101,7 +120,7 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
      *
      * @param string $token password reset token
      * @param int $status user status
-     * @return static|null
+     * @return UserRecord|null
      */
     public static function findByPasswordResetToken($token, $status = self::STATUS_ACTIVE)
     {

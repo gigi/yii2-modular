@@ -63,6 +63,16 @@ class Login extends Model
     }
 
     /**
+     * Logs User out
+     *
+     * @return bool
+     */
+    public static function logout()
+    {
+        return Yii::$app->user->logout();
+    }
+
+    /**
      * Finds user by [[username]]
      *
      * @return User|null
