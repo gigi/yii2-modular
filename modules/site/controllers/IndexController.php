@@ -62,7 +62,7 @@ class IndexController extends ModuleController
     public function actionConfirm($token)
     {
         $model = new Confirm($token);
-        if ($model->load(\Yii::$app->request->post()) && $model->validate() && $model->confirm()) {
+        if ($model->load(\Yii::$app->request->post()) && $model->confirm()) {
             return $this->goBack();
         }
 
