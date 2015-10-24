@@ -10,7 +10,7 @@ use yii\bootstrap\ActiveForm;
 
     <div class="row">
         <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['action' => ['/confirm', 'token' => $model->token]]); ?>
+            <?php $form = ActiveForm::begin(['action' => ['', 'token' => $model->token]]); ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
             <?= $form->field($model, 'passwordConfirm')->passwordInput() ?>
             <div class="form-group">

@@ -7,6 +7,6 @@ return [
      */
     'routes' => [
         '' => 'site/index',
-        '<action:(login|logout|register|forgotten|confirm)>' => 'site/index/<action>',
+        '<action:(login|logout|register|forgotten|confirm|password-reset)>' => 'site/index/<action>',
     ],
 ];

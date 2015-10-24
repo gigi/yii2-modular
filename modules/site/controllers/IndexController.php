@@ -5,6 +5,7 @@ namespace modules\site\controllers;
 use modules\site\models\Confirm;
 use modules\site\models\Login;
 use modules\site\models\Register;
+use modules\site\models\PasswordReset;
 use modules\site\components\ModuleController;
 
 /**
@@ -54,14 +55,48 @@ class IndexController extends ModuleController
         ]);
     }
 
-    public function actionForgotten()
-    {
-        echo 'Forgotten';
-    }
-
+    /**
+     * @param $token
+     * @return string|\yii\web\Response
+     */
     public function actionConfirm($token)
     {
-        $model = new Confirm($token);
+        return $this->passwordConfirm($token);
+    }
+
+    /**
+     * Reset password action
+     * @param null $token
+     * @return string|\yii\web\Response
+     */
+    public function actionPasswordReset($token = null)
+    {
+        if ($token) {
+            return $this->passwordConfirm($token, Confirm::SCENARIO_PASSWORD_RESET);
+        }
+
+        return $this->passwordResetRequest();
+    }
+
+    /**
+     * Reset form
+     * @return string
+     * @throws \yii\base\Exception
+     */
+    private function passwordResetRequest()
+    {
+        $model = new PasswordReset();
+        $reset = false;
+        if ($model->load(\Yii::$app->request->post()) && $model->resetPassword()) {
+            $reset = true;
+        }
+
+        return $this->render('passwordReset', compact('model', 'reset'));
+    }
+
+    private function passwordConfirm($token, $scenario = null)
+    {
+        $model = new Confirm($token, ['scenario' => $scenario]);
         if ($model->load(\Yii::$app->request->post()) && $model->confirm()) {
             return $this->goBack();
         }

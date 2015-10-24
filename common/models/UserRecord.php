@@ -89,7 +89,7 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
      * Finds user by email
      * @param string $email
      * @param int $status
-     * @return static|null
+     * @return UserRecord|null
      */
     public static function findByEmail($email, $status = self::STATUS_ACTIVE)
     {
