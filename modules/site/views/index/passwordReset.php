@@ -3,11 +3,11 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+$this->title = 'Register';
+
 ?>
 
 <div class="site-forgotten">
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <div class="row">
         <div class="col-lg-5">
             <?php if (!empty($reset)) : ?>

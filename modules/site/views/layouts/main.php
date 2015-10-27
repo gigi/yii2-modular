@@ -6,8 +6,6 @@ use yii\bootstrap\NavBar;
 \common\bundles\BootstrapAsset::register($this);
 \modules\site\bundles\SiteAsset::register($this);
 
-$this->title = 'Site module';
-
 ?>
 
 <?php $this->beginPage() ?>
@@ -17,7 +15,7 @@ $this->title = 'Site module';
     <head lang="en">
         <meta charset="UTF-8">
         <?= \yii\helpers\Html::csrfMetaTags() ?>
-        <title>Site module</title>
+        <title><?= $this->title ?></title>
         <?php $this->head() ?>
     </head>
     <?php $this->beginBody() ?>
@@ -54,7 +52,6 @@ $this->title = 'Site module';
 
     <!-- Begin page content -->
     <div class="container">
-
         <div class="page-header">
             <h1><?= $this->title ?></h1>
         </div>

@@ -29,6 +29,9 @@ class Confirm extends Model
      */
     public function __construct($token, $config = [])
     {
+        if (empty($config['scenario'])) {
+            $config['scenario'] = self::SCENARIO_DEFAULT;
+        }
         if (empty($token) || !is_string($token)) {
             throw new InvalidParamException('Password reset token cannot be blank.');
         }
@@ -73,15 +76,18 @@ class Confirm extends Model
         }
         $this->user->setPassword($this->password);
         $this->user->removePasswordResetToken();
-
         if ($this->isNewUserScenario()) {
             $this->user->setActive();
             $action = self::EVENT_USER_CONFIRMED;
         } else {
             $action = self::EVENT_USER_PASSWORD_RESTORED;
         }
-        static::getCurrentModule()->sendMessage($action, new UserEvent($this->user));
+        if ($this->user->save()) {
+            static::getCurrentModule()->sendMessage($action, new UserEvent($this->user));
 
-        return $this->user->save();
+            return $this->user;
+        }
+
+        return false;
     }
 }

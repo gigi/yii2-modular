@@ -41,12 +41,10 @@ class IndexController extends ModuleController
         $model = new Register();
         if ($model->load(\Yii::$app->request->post())) {
             if ($user = $model->register()) {
-                if (\Yii::$app->getUser()->login($user)) {
-                    return $this->render('register', [
-                        'model' => $model,
-                        'needConfirmation' => true
-                    ]);
-                }
+                return $this->render('register', [
+                    'model' => $model,
+                    'needConfirmation' => true
+                ]);
             }
         }
 
@@ -97,8 +95,10 @@ class IndexController extends ModuleController
     private function passwordConfirm($token, $scenario = null)
     {
         $model = new Confirm($token, ['scenario' => $scenario]);
-        if ($model->load(\Yii::$app->request->post()) && $model->confirm()) {
-            return $this->goBack();
+        if ($model->load(\Yii::$app->request->post()) && $user = $model->confirm()) {
+            if (\Yii::$app->getUser()->login($user)) {
+                return $this->goBack();
+            }
         }
 
         return $this->render('confirm', compact('model'));
