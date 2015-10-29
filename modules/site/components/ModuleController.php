@@ -11,13 +11,5 @@ use Yii;
  */
 class ModuleController extends Controller
 {
-    public function isGuest()
-    {
-        return \Yii::$app->user->isGuest;
-    }
 
-    public function getUser()
-    {
-        return \Yii::$app->user->identity;
-    }
 }

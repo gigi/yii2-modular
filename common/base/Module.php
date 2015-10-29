@@ -6,6 +6,7 @@ use common\components\Loader;
 use common\components\ModuleHelperTrait;
 use \common\interfaces\ModuleBootstrapInterface;
 use yii\base\Event;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class BaseModule
@@ -31,9 +32,14 @@ abstract class Module extends \yii\base\Module implements ModuleBootstrapInterfa
     {
         parent::init();
         $this->layout = 'main';
-        $configPath = realpath($this->getBasePath() . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'web.php');
+        $configPath = realpath($this->getBasePath() . DIRECTORY_SEPARATOR . 'config');
+        $config = require($configPath . DIRECTORY_SEPARATOR . 'web.php');
+        $localConfigPath = realpath($configPath . DIRECTORY_SEPARATOR . 'local' . DIRECTORY_SEPARATOR . 'web.php');
+        if ($localConfigPath) {
+            $config = ArrayHelper::merge($config, require($localConfigPath));
+        }
         if ($configPath) {
-            \Yii::configure($this, require($configPath));
+            \Yii::configure($this, $config);
         }
     }
 

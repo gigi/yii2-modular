@@ -10,18 +10,18 @@ use common\base\Controller;
  * Class IndexController
  * @package app\modules\admin\controllers
  */
-class IndexController extends Controller
+class NowController extends Controller
 {
     /**
      * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        echo 'NowIndex';
     }
 
     public function actionTest()
     {
-        echo 'Test';
+        echo 'NowTest';
     }
 }

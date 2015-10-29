@@ -1,0 +1,129 @@
+/*===================================================
+GENERAL
+/*===================================================*/
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    font-family: "Roboto", ​Helvetica Neue,​ Helvetica, ​Arial, ​sans-serif;
+    padding-top: 55px;
+    background: #eeeeee;
+}
+/*===================================================
+HEADER
+/*===================================================*/
+.header {
+    background: url("../img/navbar-bg.jpg") center center;
+    width: 100%;
+    height: 55px;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    padding: 0 20px;
+}
+.header-title {
+    font-size: 1.6em;
+    line-height: 55px;
+    color: #fff;
+}
+.header-title:hover,
+.header-title:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+/*
+NavBar
+*/
+.navbar-dark,
+.navbar-dark .navbar-brand {
+    color: #fff;
+}
+/*===================================================
+SIDEBAR
+/*===================================================*/
+.side-content {
+    position: fixed;
+    top: 55px;
+    bottom: 0;
+    width: 250px;
+    border-right: 1px #dedede solid;
+    background: #FFF;
+}
+.info {
+    padding: 20px;
+    color: #FFF;
+    background: url("../img/side-bg.jpg");
+    border-bottom: 1px #dedede solid;
+}
+.info__title {
+    margin: 0;
+}
+.info__content {
+    margin-top: 5px;
+}
+.nav-list {
+    list-style-type: none;
+    padding: 0;
+}
+.nav-list__item {
+
+}
+.nav-list__link {
+    padding: 10px 10px 10px 20px;
+    display: block;
+    transition: background 0.15s linear 0s, color 0.15s linear 0s;
+    color: #333;
+    font-weight: 500;
+}
+.nav-list__link:hover,
+.nav-list__link:focus {
+    background: #eeeeee;
+    color: #333;
+    text-decoration: none;
+}
+.nav-list__item-title {
+}
+.nav-list__item-icon {
+    padding-right: 5px;
+}
+/*===================================================
+CONTENT
+/*===================================================*/
+.page {
+    margin-left: 250px;
+}
+.page__head {
+    padding: 20px;
+}
+.page__title {
+    margin: 0;
+    font-weight: 100;
+    font-size: 2.1em;
+}
+.page__content-wrapper {
+    padding: 0 20px;
+}
+.page__content {
+    padding: 10px;
+    border: 1px #dedede solid;
+    background: #fff;
+}
+.breadcrumbs {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: .9em;
+}
+.breadcrumb__item {
+    display: inline-block;
+}
+.breadcrumb__item-link {
+    color: #999;
+}
+.breadcrumb__item + .breadcrumb__item::before {
+    color: #ccc;
+    content: "/";
+    padding: 0 6px 0 3px;
+}

@@ -70,6 +70,10 @@ return [
         'errorHandler' => [
             'errorAction' => 'errors/error',
         ],
+        'assetManager' => [
+            'class' => 'yii\web\AssetManager',
+            'forceCopy' => YII_DEBUG ? true : false,
+        ],
         'controllerPath' => 'common/controllers',
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
