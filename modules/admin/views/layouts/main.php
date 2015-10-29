@@ -28,7 +28,7 @@ use yii\bootstrap\NavBar;
 
     <aside class="side-content">
         <div class="info">
-            <h5 class="info__title">Gigi@ua.fm</h5>
+            <h5 class="info__title">user@example.com</h5>
             <div class="info__content">
                 Welcome to backend!
             </div>
