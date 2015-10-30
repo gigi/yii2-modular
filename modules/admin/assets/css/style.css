@@ -53,8 +53,7 @@ SIDEBAR
 }
 .info {
     padding: 20px;
-    color: #FFF;
-    background: url("../img/side-bg.jpg");
+    color: #333;
     border-bottom: 1px #dedede solid;
 }
 .info__title {
