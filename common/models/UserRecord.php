@@ -26,12 +26,22 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
     const STATUS_NEW = 0;
     const STATUS_ACTIVE = 1;
 
+    // readable status after find
+    public $statusReadable;
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return '{{%users}}';
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'statusReadable' => 'Status'
+        ];
     }
 
     /**
@@ -77,12 +87,25 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
+    public static function findById($id)
+    {
+        return static::findOne(['id' => $id]);
+    }
+
     /**
      * @inheritdoc
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+    }
+
+    /**
+     * Return users list
+     */
+    public static function getUsers($condition = null)
+    {
+        return static::find();
     }
 
     /**

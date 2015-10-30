@@ -1,7 +1,6 @@
 <?php
 
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 
 \common\bundles\BootstrapAsset::register($this);
 \modules\admin\bundles\AdminAsset::register($this);
@@ -36,7 +35,7 @@ use yii\bootstrap\NavBar;
         <nav class="nav">
             <ul class="nav-list">
                 <li class="nav-list__item">
-                    <a class="nav-list__link" href="#">
+                    <a class="nav-list__link" href="<?= Url::to(['users/index']);?>">
                         <i class="nav-list__item-icon icon icon-users"></i>
                         <span class="nav-list__item-title">Users</span>
                     </a>
@@ -60,10 +59,19 @@ use yii\bootstrap\NavBar;
     <div class="page">
         <div class="page__head">
             <h1 class="page__title"><?= $this->title ?></h1>
-            <ul class="breadcrumbs">
-                <li class="breadcrumb__item"><a class="breadcrumb__item-link" href="/">Home</a></li>
-                <li class="breadcrumb__item"><a class="breadcrumb__item-link" href="users">Users</a></li>
-            </ul>
+            <?= \yii\widgets\Breadcrumbs::widget([
+                'itemTemplate' => '<li class="breadcrumbs__item">{link}</li>',
+                'activeItemTemplate' => '<li class="breadcrumbs__item breadcrumbs__item_active">{link}</li>',
+                'options' => [
+                    'class' => 'breadcrumbs'
+                ],
+                'homeLink' => [
+                    'label' => 'Home',
+                    'url' => '/admin',
+                    'class' => 'breadcrumbs__item-link'
+                ],
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
         </div>
         <div class="page__content-wrapper">
             <div class="page__content">

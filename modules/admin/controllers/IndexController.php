@@ -3,14 +3,13 @@
 namespace modules\admin\controllers;
 
 use Yii;
-use common\base\Controller;
-
+use modules\admin\components\ModuleController;
 
 /**
  * Class IndexController
  * @package app\modules\admin\controllers
  */
-class IndexController extends Controller
+class IndexController extends ModuleController
 {
     /**
      * @return string

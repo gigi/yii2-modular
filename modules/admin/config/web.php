@@ -8,7 +8,9 @@ return [
             'rules' => [
                 '/' => 'index/index',
                 '<controller:\w+>'  => '<controller>/index',
-                '<controller:\w+>/<action:\w+>'  => '<controller>/<action>'
+                '<controller:\w+>/<id:\d+>'=>'<controller>/edit',
+                '<controller:\w+>/<id:\d+>/<action:\w+>'=>'<controller>/<action>',
+                '<controller:\w+>/<action:\w+>'  => '<controller>/<action>',
             ],
         ],
     ]
