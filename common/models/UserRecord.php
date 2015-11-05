@@ -76,6 +76,8 @@ class UserRecord extends \common\base\ActiveRecord implements IdentityInterface
                     self::STATUS_NEW
                 ]
             ],
+            [['email', 'status'], 'safe', 'on' => ['create', 'update']],
+            [['password_hash'], 'safe', 'on' => ['passwordUpdate']],
         ];
     }
 

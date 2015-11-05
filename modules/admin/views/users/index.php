@@ -8,6 +8,7 @@ $this->title = 'Users';
 ?>
 
 <?= Grid::widget([
+    'caption' => 'Hello world!',
     'dataProvider' => $dataProvider,
     'columns' => [
         'id',
@@ -26,3 +27,8 @@ $this->title = 'Users';
         ['class' => 'yii\grid\ActionColumn']
     ],
 ]); ?>
+
+<div class="page__content">
+    <div class="page__content-title">Title</div>
+    <div class="page__content-inner">Hello from content</div>
+</div>

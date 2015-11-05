@@ -2,11 +2,12 @@
 
 namespace modules\admin\controllers;
 
+use common\exceptions\UserNotFoundException;
 use Yii;
 use modules\admin\components\ModuleController;
 use modules\admin\models\Users;
 use yii\web\NotFoundHttpException;
-
+use yii\data\ActiveDataProvider;
 
 /**
  * Class IndexController
@@ -22,9 +23,21 @@ class UsersController extends ModuleController
     public function actionIndex($id = null)
     {
         $model = new Users();
-        $dataProvider = $model->getUsersProvider();
+        $dataProvider = $this->getUsersProvider($model->getUsers());
 
         return $this->render('index', compact('model', 'dataProvider'));
+    }
+
+    /**
+     * Returns Active data provider for grid
+     * @param \yii\db\ActiveQuery $query
+     * @return ActiveDataProvider
+     */
+    public function getUsersProvider($query)
+    {
+        return new ActiveDataProvider([
+            'query' => $query
+        ]);
     }
 
     public function actionCreate()
@@ -40,10 +53,32 @@ class UsersController extends ModuleController
      */
     public function actionEdit($id)
     {
-        if ($model = Users::getUser($id)) {
+        $model = $this->getUserModel($id);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->redirect(['/admin/users']);
+        } else {
+            $model->load(['Users' => $model->user->toArray()]);
+
             return $this->render('edit', compact('model'));
         }
+    }
 
-        throw new NotFoundHttpException;
+    public function actionDelete($id)
+    {
+        $model = $this->getUserModel($id);
+        if ($model->delete()) {
+            $this->redirect(['/admin/users']);
+        }
+    }
+
+    private function getUserModel($id)
+    {
+        try {
+            $model = new Users($id);
+        } catch (UserNotFoundException $e) {
+            throw new NotFoundHttpException;
+        }
+
+        return $model;
     }
 }

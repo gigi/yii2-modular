@@ -74,9 +74,7 @@ use yii\helpers\Url;
             ]) ?>
         </div>
         <div class="page__content-wrapper">
-            <div class="page__content">
-                <?= $content ?>
-            </div>
+            <?= $content ?>
         </div>
     </div>
 

@@ -16,9 +16,10 @@ use yii\bootstrap\Html;
 // GridView
 \Yii::$container->set('common\widgets\Grid', [
     'layout' => '{items}{summary}{pager}',
+    'options' => ['class' => 'page__content'],
     'tableOptions' => ['class' => 'table table-striped'],
     'summaryOptions' => ['class' => 'table-summary'],
-    'captionOptions' => ['class' => 'table-caption']
+    'captionOptions' => ['class' => 'table-caption page__content-title']
 ]);
 
 // Grid action buttons
@@ -33,6 +34,7 @@ use yii\bootstrap\Html;
         'delete' => function ($url, $model, $key) {
             return Html::a('<span class="icon icon-bin"></span>', $url, [
                 'class' => 'table-action-button transition-bg btn btn-xs btn-default',
+                'data-confirm' => Yii::t('yii', 'Are you sure?'),
             ]);
         }
     ]

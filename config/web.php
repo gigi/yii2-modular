@@ -34,6 +34,9 @@ return [
     ],
     'components' => [
         'db' => $db,
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'view' => [
             'theme' => [
                 'basePath' => '@app/common/themes/basic',

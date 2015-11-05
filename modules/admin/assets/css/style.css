@@ -10,6 +10,15 @@ body {
     padding-top: 50px;
     background: #eeeeee;
 }
+/*
+Common animations, hovers
+*/
+.transition-bg {
+    transition: background 0.15s linear 0s, color 0.15s linear 0s;
+}
+/*
+Tables
+*/
 table th a {
     color: #333;
 }
@@ -42,14 +51,6 @@ table th a:hover {
     font-size: .8em;
     margin: 15px;
 }
-.table-caption {
-    font-size: 1.5em;
-    color: #333;
-    margin: 0 15px;
-}
-.transition-bg {
-    transition: background 0.15s linear 0s, color 0.15s linear 0s;
-}
 .table-action-button {
     color: #999;
 }
@@ -75,7 +76,6 @@ HEADER
     color: #fff;
     text-decoration: none;
 }
-
 /*
 NavBar
 */
@@ -150,7 +150,20 @@ CONTENT
 .page__content {
     border: 1px #dedede solid;
     background: #fff;
+    margin-bottom: 20px;
 }
+.page__content-inner {
+    padding: 15px;
+}
+.page__content-title {
+    font-size: 1.5em;
+    color: #333;
+    margin: 15px 15px 0 15px;
+    padding: 0;
+}
+/*
+Breadcrumbs
+*/
 .breadcrumbs {
     padding: 0;
     margin: 0;
