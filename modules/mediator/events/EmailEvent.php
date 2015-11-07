@@ -2,7 +2,9 @@
 
 namespace modules\mediator\events;
 
-class EmailEvent extends \common\base\Event
+use yii\base\Event;
+
+class EmailEvent extends Event
 {
     const TEMPLATE_CONFIRM = 'confirm';
     const TEMPLATE_FORGOTTEN = 'forgotten';

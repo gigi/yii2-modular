@@ -33,6 +33,9 @@ return [
         ]
     ],
     'components' => [
+        'menu' => [
+            'class' => 'common\components\Menu'
+        ],
         'db' => $db,
         'authManager' => [
             'class' => 'yii\rbac\DbManager',

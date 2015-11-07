@@ -2,10 +2,13 @@
 
 namespace common\components;
 
+use yii\helpers\Inflector;
+
 /**
  * Set of string, array helpers
+ * Extends yii\helpers\Inflector class
  */
-class Helper
+class Helper extends Inflector
 {
     /**
      * Extended Array_column implementation for PHP < 5.5

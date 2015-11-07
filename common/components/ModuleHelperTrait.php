@@ -5,13 +5,13 @@ namespace common\components;
 use yii\base\InvalidValueException;
 
 /**
- * Trait to handle some necessary module methods from inner classes
+ * Trait to handle some necessary methods inside module's classes
  * @package common\components
  */
 trait ModuleHelperTrait
 {
     /**
-     * Returns current module instance by class namespace
+     * Returns current module instance by class namespace (just one level for now...)
      * Uses Yii lazy loading mechanism
      *
      * @return null|\common\base\Module

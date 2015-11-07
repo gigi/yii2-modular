@@ -15,7 +15,7 @@ interface ModuleBootstrapInterface
      * Will be executed on app start without creating module class instance
      *
      * @param object $app object current Yii::app() instance
-     * @return bool - if false common\components\Loader stops load the app and throws ModuleBootstrapException
+     *
      */
     public static function bootstrap($app);
 }

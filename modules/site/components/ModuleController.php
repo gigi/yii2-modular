@@ -11,5 +11,4 @@ use Yii;
  */
 class ModuleController extends Controller
 {
-
 }

@@ -19,19 +19,18 @@ abstract class Module extends \yii\base\Module implements ModuleBootstrapInterfa
     public $routes;
     public $events;
     public $bootOrder = Loader::BOOT_ORDER_DEFAULT;
+    public $layout = 'main';
 
     /**
      * @inheritdoc
      */
     public static function bootstrap($app)
     {
-        return true;
     }
 
     public function init()
     {
         parent::init();
-        $this->layout = 'main';
         $configPath = realpath($this->getBasePath() . DIRECTORY_SEPARATOR . 'config');
         $config = require($configPath . DIRECTORY_SEPARATOR . 'web.php');
         $localConfigPath = realpath($configPath . DIRECTORY_SEPARATOR . 'local' . DIRECTORY_SEPARATOR . 'web.php');
@@ -52,5 +51,16 @@ abstract class Module extends \yii\base\Module implements ModuleBootstrapInterfa
     public function sendMessage($message, Event $event)
     {
         \Yii::$app->trigger($message, $event);
+    }
+
+    /**
+     * Register menu items
+     *
+     * @param $key
+     * @param $items
+     */
+    public static function registerMenu($key, $items)
+    {
+        \Yii::$app->menu->add($key, $items);
     }
 }

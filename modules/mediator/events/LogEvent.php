@@ -2,7 +2,9 @@
 
 namespace modules\mediator\events;
 
-class LogEvent extends \common\base\Event
+use common\base\Event;
+
+class LogEvent extends Event
 {
     public $category;
     public $action;
