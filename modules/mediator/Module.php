@@ -38,7 +38,7 @@ class Module extends \common\base\Module
      */
     public static function sendConfirmEmail($userEvent)
     {
-        $params['link'] = Url::to(['/site/index/confirm', 'token' => $userEvent->user->password_reset_token], true);
+        $params['link'] = Url::to(['/auth/index/confirm', 'token' => $userEvent->user->password_reset_token], true);
         static::sendEmail(EmailEvent::TEMPLATE_CONFIRM, $userEvent->user->email, $params);
     }
 
@@ -48,7 +48,7 @@ class Module extends \common\base\Module
      */
     public static function sendForgottenEmail($userEvent)
     {
-        $params['link'] = Url::to(['/site/index/password-reset', 'token' => $userEvent->user->password_reset_token], true);
+        $params['link'] = Url::to(['/auth/index/password-reset', 'token' => $userEvent->user->password_reset_token], true);
         static::sendEmail(EmailEvent::TEMPLATE_FORGOTTEN, $userEvent->user->email, $params);
     }
 }

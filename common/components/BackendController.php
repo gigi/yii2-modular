@@ -58,20 +58,28 @@ class BackendController extends Controller
     }
 
     /**
-     * Sets current page title from action name, controller name or module name
-     * Can be redefined in the view class with $this->title = ''New title'
-     * @param Action $action
+     * Sets current page title using Action
+     * if $action is string then sets current $action param directly to view instance
+     * Can be redefined in the view class with $this->title = 'New title'
+     * @param \yii\base\Action|string $action
      */
-    public function setTitle(Action $action)
+    public function setTitle($action)
     {
-        if ($action->id != $this->defaultAction) {
-            $title = $action->id;
-        } elseif ($this->id != $this->defaultController) {
-            $title = $this->id;
+        if ($action instanceof Action) {
+            // auto title
+            if ($action->id != $this->defaultAction) {
+                $title = $action->id;
+            } elseif ($this->id != $this->defaultController) {
+                $title = $this->id;
+            } else {
+                $title = $this->module->id;
+            }
+            $title = Helper::humanize($title);
         } else {
-            $title = $this->module->id;
+            $title = $action;
         }
-        $this->view->title = Helper::humanize($title);
+
+        $this->view->title = $title;
     }
 
     public function beforeAction($action)

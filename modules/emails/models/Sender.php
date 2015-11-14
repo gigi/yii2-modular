@@ -6,7 +6,6 @@ namespace modules\emails\models;
 
 class Sender extends \common\base\Model
 {
-
     public static function send($event)
     {
         $template = null;

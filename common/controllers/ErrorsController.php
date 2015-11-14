@@ -6,7 +6,7 @@ use common\base\Controller;
 
 class ErrorsController extends Controller
 {
-    public $layout = 'frontend/main';
+    public $layout = 'common/main';
 
     public function actions()
     {

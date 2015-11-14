@@ -11,9 +11,9 @@ return [
                 '/' => 'index/index',
                 '<id:\d+>'=>'index/edit',
                 '<id:\d+>/<action:(delete)>'=>'index/<action>',
-                '<action:\w+>'=>'index/<action>',
-//                '<controller:\w+>'=>'<controller>/index',
-//                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+                '<action:(create)>'=>'index/<action>',
+                '<controller:\w+>'=>'<controller>/index',
+                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             ],
         ],
     ]

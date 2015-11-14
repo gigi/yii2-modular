@@ -17,7 +17,17 @@ class Module extends \common\base\Module
                     [
                         'label' => 'Create',
                         'url' => ['/users/index/create']
-                    ]
+                    ],
+                    [
+                        'label' => 'Rbac',
+                        'url' => ['/users/rbac/index'],
+                        'items' => [
+                            [
+                                'label' => 'Roles',
+                                'url' => ['/users/rbac/roles'],
+                            ]
+                        ]
+                    ],
                 ]
             ]
         ]);

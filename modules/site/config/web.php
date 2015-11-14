@@ -7,6 +7,7 @@ return [
      */
     'routes' => [
         '' => 'site/index',
-        '<action:(login|logout|register|forgotten|confirm|password-reset)>' => 'site/index/<action>',
+        '<action:\w+>' => 'site/index/<action>'
     ],
+    'layout' => '/frontend/main'
 ];

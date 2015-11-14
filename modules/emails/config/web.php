@@ -5,8 +5,8 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'useFileTransport' => true,
-            'htmlLayout' => '@modules/emails/views/layouts/htmlMain',
-            'textLayout' => '@modules/emails/views/layouts/textMain',
+            'htmlLayout' => '@modules/emails/views/templates/layouts/htmlMain',
+            'textLayout' => '@modules/emails/views/templates/layouts/textMain',
             'viewPath' => '@modules/emails/views/'
         ]
     ],

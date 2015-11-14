@@ -19,6 +19,7 @@ if (file_exists(__DIR__ . '/local/params.php')) {
 
 return [
     'id' => 'Base',
+    'name' => 'Yii2-modular',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'common\controllers',
     'bootstrap' => [
@@ -27,6 +28,9 @@ return [
         'common\components\Loader'
     ],
     'modules' => [
+        'rbac' => [
+            'class' => 'dektrium\rbac\Module',
+        ],
         'debug' => [
             'class' => 'yii\debug\Module',
             'allowedIPs' => ['127.0.0.1']

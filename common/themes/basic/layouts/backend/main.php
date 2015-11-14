@@ -22,31 +22,59 @@ use yii\widgets\Menu;
     <?php $this->beginBody() ?>
 
     <header class="header">
-        <a href="/" class="header-title">Yii2-Modular</a>
+        <a href="/" class="header-title"><?= \Yii::$app->name ?></a>
+
+        <div class="header-info">
+            <?= \yii\bootstrap\ButtonDropdown::widget([
+                'label' => '<i class="icon icon-users"></i> ' . $this->context->getUser()['email'],
+                'encodeLabel' => false,
+                'split' => true,
+                'options' => [
+                    'class' => 'btn-default'
+                ],
+                'dropdown' => [
+                    'options' => [
+                        'class' => 'dropdown-menu-right'
+                    ],
+                    'encodeLabels' => false,
+                    'items' => [
+                        [
+                            'label' => '<i class="icon icon-cogs"></i> Edit',
+                            'url' => ['/users/index/edit', 'id' => $this->context->getUser()['id']]
+                        ],
+                        [
+                            'label' => '<i class="icon icon-exit"></i> Logout',
+                            'url' => ['/auth/index/logout']
+                        ],
+                    ],
+                ],
+            ]) ?>
+        </div>
     </header>
 
     <aside class="side-content">
         <div class="info">
-            <h5 class="info__title">user@example.com</h5>
+            <h5 class="info__title"><?= $this->context->getUser()['email'] ?></h5>
+
             <div class="info__content">
                 Welcome to backend!
             </div>
         </div>
         <nav class="nav">
-        <?=Menu::widget([
-            'encodeLabels' => false,
-            'activeCssClass' => 'nav-list__item_active',
-            'activateParents' => true,
-            'items' => Yii::$app->menu->get('admin'),
-            'options' => [
-                'class' => 'nav-list'
-            ],
-            'itemOptions' => [
-                'class' => 'nav-list__item'
-            ],
-            'submenuTemplate' => '<ul class="nav-list">{items}</ul>',
-            'linkTemplate' => '<a class="nav-list__link" href="{url}">{label}</a>'
-        ])?>
+            <?= Menu::widget([
+                'encodeLabels' => false,
+                'activeCssClass' => 'nav-list__item_active',
+                'activateParents' => true,
+                'items' => Yii::$app->menu->get('admin'),
+                'options' => [
+                    'class' => 'nav-list'
+                ],
+                'itemOptions' => [
+                    'class' => 'nav-list__item'
+                ],
+                'submenuTemplate' => '<ul class="nav-list">{items}</ul>',
+                'linkTemplate' => '<a class="nav-list__link" href="{url}">{label}</a>'
+            ]) ?>
         </nav>
     </aside>
 

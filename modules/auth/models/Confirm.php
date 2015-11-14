@@ -1,6 +1,6 @@
 <?php
 
-namespace modules\site\models;
+namespace modules\auth\models;
 
 use common\events\UserEvent;
 use common\models\UserRecord as User;

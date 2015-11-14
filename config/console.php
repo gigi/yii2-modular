@@ -22,6 +22,11 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'common\commands',
+    'modules' => [
+        'rbac' => [
+            'class' => 'dektrium\rbac\Module',
+        ]
+    ],
     'components' => [
         'db' => $db,
         'log' => [

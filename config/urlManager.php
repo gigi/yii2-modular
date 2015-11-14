@@ -6,6 +6,6 @@ return [
     'enableStrictParsing' => true,
     'showScriptName' => false,
     'rules' => [
-
+        'rbac/<controller>/<action>' => 'rbac/<controller>/<action>'
     ],
 ];
