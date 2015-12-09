@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 
 /**
  * Class IndexController
+ *
  * @package app\modules\users\controllers
  */
 class IndexController extends ModuleController
@@ -25,18 +26,6 @@ class IndexController extends ModuleController
         $dataProvider = $this->getUsersProvider($model->getUsers());
 
         return $this->render('index', compact('model', 'dataProvider'));
-    }
-
-    /**
-     * Returns Active data provider for grid
-     * @param \yii\db\ActiveQuery $query
-     * @return ActiveDataProvider
-     */
-    public function getUsersProvider($query)
-    {
-        return new ActiveDataProvider([
-            'query' => $query
-        ]);
     }
 
     public function actionCreate()

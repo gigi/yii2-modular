@@ -15,9 +15,9 @@ class Users extends Model
     public $status;
     public $created;
     public $updated;
-    // common/models/UserRecord
+    /** @var \common\models\UserRecord */
     public $user;
-    // common/models/UserRecord::find()
+    /** @var \common\models\UserRecord::find() */
     public $users;
 
     /**
@@ -113,6 +113,11 @@ class Users extends Model
         return $this->users;
     }
 
+    /**
+     * Saves the user
+     *
+     * @return bool
+     */
     public function save()
     {
         if (!$this->validate()) {
@@ -131,6 +136,11 @@ class Users extends Model
         return $this->user->save();
     }
 
+    /**
+     * Marks user
+     *
+     * @return bool
+     */
     public function delete()
     {
         $this->user->status = UserRecord::STATUS_DELETED;

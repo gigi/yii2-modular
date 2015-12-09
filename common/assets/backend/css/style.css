@@ -54,6 +54,13 @@ table th a:hover {
 .table-action-button {
     color: #999;
 }
+/**
+Pixel perfect for row-based content
+*/
+.row-no-padding {
+    margin-left: -30px;
+    margin-right: -30px;
+}
 /*===================================================
 HEADER
 /*===================================================*/

@@ -6,7 +6,6 @@ use \yii\bootstrap\Html;
 $this->title = 'Users';
 
 ?>
-
 <?= Grid::widget([
     'caption' => 'Hello world!',
     'dataProvider' => $dataProvider,

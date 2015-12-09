@@ -4,6 +4,9 @@ namespace common\rbac;
 
 class UserRule extends \yii\rbac\Rule
 {
+    /**
+     * @inheritdoc
+     */
     public $name = 'isUser';
 
     /**
@@ -11,6 +14,6 @@ class UserRule extends \yii\rbac\Rule
      */
     public function execute($user, $item, $params)
     {
-        return $params['user'] == $user;
+        return $user == $params;
     }
 }
