@@ -13,7 +13,7 @@ return [
                 '<id:\d+>/<action:(delete)>'=>'index/<action>',
                 '<action:(create)>'=>'index/<action>',
                 '<controller:\w+>'=>'<controller>/index',
-                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+                '<controller:\w+>/<action:[\w-]+>'=>'<controller>/<action>',
             ],
         ],
     ]

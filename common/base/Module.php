@@ -4,7 +4,7 @@ namespace common\base;
 
 use common\components\Loader;
 use common\components\ModuleHelperTrait;
-use \common\interfaces\ModuleBootstrapInterface;
+use common\interfaces\ModuleBootstrapInterface;
 use yii\base\Event;
 use yii\helpers\ArrayHelper;
 

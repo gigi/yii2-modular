@@ -3,11 +3,9 @@
 namespace modules\users\controllers;
 
 use modules\users\components\ModuleController;
-use modules\users\models\Users;
 use common\exceptions\UserNotFoundException;
-use Yii;
 use yii\web\NotFoundHttpException;
-use yii\data\ActiveDataProvider;
+use modules\users\services\Users as UserService;
 
 /**
  * Class IndexController
@@ -22,10 +20,12 @@ class IndexController extends ModuleController
      */
     public function actionIndex()
     {
-        $model = new Users();
-        $dataProvider = $this->getUsersProvider($model->getUsers());
+        $dataProvider = $this->getActiveDataProvider(UserService::findAllQuery());
+        $getStatus = function($status = null) {
+            return UserService::getStatuses($status);
+        };
 
-        return $this->render('index', compact('model', 'dataProvider'));
+        return $this->render('index', compact('model', 'dataProvider', 'getStatus'));
     }
 
     public function actionCreate()
@@ -41,32 +41,40 @@ class IndexController extends ModuleController
      */
     public function actionEdit($id)
     {
-        $model = $this->getUserModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->redirect(['/users/index/index']);
-        } else {
-            $model->load(['Users' => $model->user->toArray()]);
-
-            return $this->render('edit', compact('model'));
+        $userService = $this->getUserService($id);
+        if ($userService->setUserParams(\Yii::$app->request->post()) && $userService->saveUser()) {
+            return $this->redirect(['/users/index/index']);
         }
+        $statuses = UserService::getStatuses();
+
+        return $this->render('edit', [
+            'model' => $userService->getUserModel(),
+            'statuses' => $statuses
+        ]);
     }
 
     public function actionDelete($id)
     {
-        $model = $this->getUserModel($id);
-        if ($model->delete()) {
+        $service = $this->getUserService($id);
+        if ($service->deleteUser()) {
             $this->redirect(['/users/index/index']);
         }
     }
 
-    private function getUserModel($id)
+    /**
+     * @param $id
+     * @return \modules\users\services\Users
+     * @throws NotFoundHttpException
+     */
+    private function getUserService($id)
     {
+        $service = new UserService;
         try {
-            $model = new Users($id);
+            $service->findById($id);
         } catch (UserNotFoundException $e) {
             throw new NotFoundHttpException;
         }
 
-        return $model;
+        return $service;
     }
 }

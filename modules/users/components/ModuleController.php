@@ -15,7 +15,10 @@ class ModuleController extends BackendController
     public function getActiveDataProvider($query)
     {
         return new ActiveDataProvider([
-            'query' => $query
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => $this->getParams('pageSize'),
+            ]
         ]);
     }
 }

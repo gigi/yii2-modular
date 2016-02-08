@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'a' => 1
+    'pageSize' => 10
 ];

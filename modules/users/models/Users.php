@@ -4,7 +4,6 @@ namespace modules\users\models;
 
 use common\base\Model;
 use common\models\UserRecord;
-use common\exceptions\UserNotFoundException;
 use yii\base\InvalidParamException;
 
 class Users extends Model
@@ -15,27 +14,12 @@ class Users extends Model
     public $status;
     public $created;
     public $updated;
-    /** @var \common\models\UserRecord */
-    public $user;
-    /** @var \common\models\UserRecord::find() */
-    public $users;
 
-    /**
-     * @inheritdoc
-     */
-    public function __construct($id = null, $config = null)
+    public function __construct($id = null, array $config = null)
     {
         parent::__construct($config);
         if ($id) {
-            // one user
-            if ($user = UserRecord::findById($id)) {
-                $this->user = $user;
-            } else {
-                throw new UserNotFoundException;
-            }
-        } else {
-            // all users
-            $this->users = UserRecord::find();
+            $this->id = $id;
         }
     }
 
@@ -95,56 +79,5 @@ class Users extends Model
         }
 
         return $statuses;
-    }
-
-    /**
-     * @return null|static
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
-     * Saves the user
-     *
-     * @return bool
-     */
-    public function save()
-    {
-        if (!$this->validate()) {
-            return false;
-        }
-
-        if ($this->password) {
-            $this->user->setScenario('passwordUpdate');
-            $this->user->password = $this->password;
-        } else {
-            $this->user->setScenario('update');
-        }
-
-        $this->user->load(['UserRecord' => $this->getAttributes()]);
-
-        return $this->user->save();
-    }
-
-    /**
-     * Marks user
-     *
-     * @return bool
-     */
-    public function delete()
-    {
-        $this->user->status = UserRecord::STATUS_DELETED;
-
-        return $this->user->save();
     }
 }

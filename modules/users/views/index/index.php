@@ -6,8 +6,8 @@ use \yii\bootstrap\Html;
 $this->title = 'Users';
 
 ?>
+<div class="page__content">
 <?= Grid::widget([
-    'caption' => 'Hello world!',
     'dataProvider' => $dataProvider,
     'columns' => [
         'id',
@@ -17,15 +17,15 @@ $this->title = 'Users';
         [
             'label' => 'Status',
             'format' => 'raw',
-            'value' => function($row) use ($model) {
-                $status = $model::getStatuses($row->status);
+            'value' => function($row) use ($getStatus) {
+                $status = $getStatus($row->status);
 
                 return Html::label($status['label'], null, ['class' => 'label label-' . $status['type']]);
             }
         ],
         ['class' => 'yii\grid\ActionColumn']
     ],
-]); ?>
+]); ?></div>
 
 <div class="page__content">
     <div class="page__content-title">Title</div>

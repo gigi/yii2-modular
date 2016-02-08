@@ -23,8 +23,22 @@ class Module extends \common\base\Module
                         'url' => ['/users/rbac/index'],
                         'items' => [
                             [
-                                'label' => 'Roles',
-                                'url' => ['/users/rbac/roles'],
+                                'label' => 'Create role',
+                                'url' => ['/users/rbac/create-role'],
+                            ],
+                            [
+                                'label' => 'Create permission',
+                                'url' => ['/users/rbac/create-permission'],
+                            ],
+                            [
+                                'label' => 'Edit role',
+                                'url' => ['/users/rbac/edit-role'],
+                                'hide' => true
+                            ],
+                            [
+                                'label' => 'Edit permission',
+                                'url' => ['/users/rbac/edit-permission'],
+                                'hide' => true
                             ]
                         ]
                     ],

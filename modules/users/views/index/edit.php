@@ -20,7 +20,7 @@ $this->title = 'Edit user';
             ]
         ]); ?>
         <?= $form->field($model, 'created')->staticInput() ?>
-        <?= $form->field($model, 'status')->label()->radioButtonGroup(Helper::array_column($model::getStatuses(),
+        <?= $form->field($model, 'status')->label()->radioButtonGroup(Helper::array_column($statuses,
             'label', true),
             [
                 'class' => 'btn-group-sm',

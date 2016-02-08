@@ -1,6 +1,6 @@
 <?php
 
-use yii\widgets\Menu;
+use common\widgets\Menu;
 
 \common\bundles\BootstrapAsset::register($this);
 \common\bundles\BackendAsset::register($this);
@@ -18,6 +18,7 @@ use yii\widgets\Menu;
         <title><?= $this->title ?></title>
         <?php $this->head() ?>
     </head>
+
     <body>
     <?php $this->beginBody() ?>
 
@@ -102,5 +103,6 @@ use yii\widgets\Menu;
 
     <?php $this->endBody() ?>
     </body>
+
     </html>
 <?php $this->endPage() ?>

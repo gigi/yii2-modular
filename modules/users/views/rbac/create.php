@@ -9,19 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace modules\users\models;
-
-use common\base\ActiveRecord;
-
-/**
- * Auth item Active record model
- *
- * @author Alexey Snigirev <gigi@ua.fm>
- */
-class AuthItemRecord extends ActiveRecord
-{
-    public static function tableName()
-    {
-        return 'auth_item';
-    }
-}
+?>
+<div class="page__content">
+<?=$form?>
+</div>

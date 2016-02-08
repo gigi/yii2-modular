@@ -2,16 +2,16 @@
 
 namespace modules\users\controllers;
 
+use common\components\Helper;
 use modules\users\components\ModuleController;
 use modules\users\models\AuthItem;
-use yii\base\Exception;
-use yii\base\InvalidValueException;
+use modules\users\models\Permissions;
+use modules\users\models\Roles;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 class RbacController extends ModuleController
 {
-    public $authItemModel;
-
     /**
      * Render main grids
      *
@@ -19,57 +19,87 @@ class RbacController extends ModuleController
      */
     public function actionIndex()
     {
-        $model = new AuthItem();
+        $rolesModel = new Roles();
+        $permissionsModel = new Permissions();
 
-        $rolesDataProvider = $this->getActiveDataProvider($model->getRoles());
-        $permissionsDataProvider = $this->getActiveDataProvider($model->getPermissions());
+        $roles = $this->renderModels($rolesModel);
+        $permissions = $this->renderModels($permissionsModel);
 
-        return $this->render('index', compact('model', 'rolesDataProvider', 'permissionsDataProvider'));
-    }
-
-    public function actionEdit($id)
-    {
-        $model = $this->getAuthItemModel($id);
-
-        return $this->render('edit', compact('model'));
-    }
-
-    public function actionRoles()
-    {
-        return $this->render('index');
+        return $this->render('index', compact('roles', 'permissions'));
     }
 
     /**
-     * Returns one model Auth item by it's name
-     *
-     * @param $id
-     * @return \modules\users\models\AuthItem
-     * @throws NotFoundHttpException
+     * @return string|\yii\web\Response
      */
-    public function getAuthItemModel($id)
+    public function actionCreateRole()
     {
-        try {
-            $model = new AuthItem($id);
-        } catch (\InvalidArgumentException $e) {
+        $rolesModel = new Roles();
+
+        return $this->renderEditForm($rolesModel);
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     */
+    public function actionCreatePermission()
+    {
+        $permissionModel = new Permissions();
+
+        return $this->renderEditForm($permissionModel);
+    }
+
+    /**
+     * @param AuthItem $model
+     * @return string|\yii\web\Response
+     */
+    public function renderEditForm($model)
+    {
+        if ($model->load($this->getRequest()->post()) && $model->save()) {
+            return $this->redirect(['rbac/index']);
+        }
+
+        $form = $this->renderPartial('_editForm', [
+            'model' => $model
+        ]);
+
+        return $this->render('create', compact('form'));
+    }
+
+    /**
+     * Renders _authItems grid
+     *
+     * @param AuthItem $model
+     * @return string
+     */
+    public function renderModels(AuthItem $model)
+    {
+        $modelId = Helper::singularize($model->getUniqueId());
+
+        return $this->renderPartial('_authItems', [
+            'dataProvider' => $model->getDataProvider(),
+            'modelId' => $modelId,
+            'title' => $model->getAttributeLabel('type')
+        ]);
+    }
+
+    public function actionEditRole($id)
+    {
+        $model = new Roles();
+        if (!$model->loadByName($id)) {
             throw new NotFoundHttpException;
         }
 
-        return $this->authItemModel = $model;
-    }
+        $form = $this->renderPartial('_editForm', [
+            'model' => $model
+        ]);
 
-    public function getAuthItem($id = null)
-    {
-        if (!$this->authItemModel) {
-            $this->getAuthItemModel($id);
-        }
-
-        return $this->authItemModel->item;
+        return $this->render('create', compact('form'));
     }
 
     /**
      * Just some rbac tests
      */
-    private function tests()
+    public function actionTest()
     {
         $auth = \Yii::$app->authManager;
         $auth->removeAll();

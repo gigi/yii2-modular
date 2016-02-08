@@ -16,10 +16,10 @@ use yii\bootstrap\Html;
 // GridView
 \Yii::$container->set('common\widgets\Grid', [
     'layout' => '{items}{summary}{pager}',
-    'options' => ['class' => 'page__content'],
+    'options' => ['class' => 'table-wrapper'],
     'tableOptions' => ['class' => 'table table-striped'],
     'summaryOptions' => ['class' => 'table-summary'],
-    'captionOptions' => ['class' => 'table-caption page__content-title']
+    'captionOptions' => ['class' => 'table-caption']
 ]);
 
 // Grid action buttons

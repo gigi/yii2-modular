@@ -45,14 +45,24 @@ table th a:hover {
     border: none;
 }
 .table {
-    margin-bottom: 0;
+    margin-bottom: 15px;
+}
+.table-caption {
+    margin: 0;
+    padding: 15px 15px 0 15px;
+    overflow: hidden;
+}
+.table-caption-button {
+    float: right;
 }
 .table-summary {
     font-size: .8em;
-    margin: 15px;
 }
 .table-action-button {
     color: #999;
+}
+.table-wrapper {
+    margin: -15px -15px 0 -15px;
 }
 /**
 Pixel perfect for row-based content
@@ -61,6 +71,17 @@ Pixel perfect for row-based content
     margin-left: -30px;
     margin-right: -30px;
 }
+.pagination,
+.table-summary,
+.form-horizontal {
+    padding: 0 15px;
+    margin-bottom: 15px;
+}
+.pagination {
+    display: block;
+    overflow: hidden;
+}
+
 /*===================================================
 HEADER
 /*===================================================*/
@@ -71,6 +92,7 @@ HEADER
     position: fixed;
     top: 0;
     padding: 0 20px;
+    z-index: 100;
 }
 .header-title {
     font-size: 1.6em;
@@ -186,15 +208,26 @@ CONTENT
     border: 1px #dedede solid;
     background: #fff;
     margin-bottom: 20px;
+    padding: 15px 15px 0 15px;
+    overflow: hidden;
 }
 .page__content-inner {
-    padding: 15px;
+    padding-bottom: 15px;
+}
+.page__content-title,
+.page__content-header-btn {
+    margin: 0;
+    display: inline-block;
+}
+.page__content-header-btn .icon {
+    margin-top: 3px;
+    margin-right: 3px;
+    vertical-align: top;
+    display: inline-block;
 }
 .page__content-title {
     font-size: 1.5em;
     color: #333;
-    margin: 15px 15px 0 15px;
-    padding: 0;
 }
 /*
 Breadcrumbs

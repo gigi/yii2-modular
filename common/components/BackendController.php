@@ -23,6 +23,7 @@ class BackendController extends Controller
     /**
      * Attempt to build automatic breadcrumbs according
      * to current module, controller and action
+     *
      * @param \yii\base\Action $action
      */
     public function breadcrumbs(Action $action)
@@ -53,7 +54,7 @@ class BackendController extends Controller
 
         // third level for action
         if ($actionName != $this->defaultAction) {
-            $this->addBreadcrumb(Helper::camel2words($actionName));
+            $this->addBreadcrumb(Helper::titleize(Helper::camel2words($actionName)));
         }
     }
 
@@ -61,6 +62,7 @@ class BackendController extends Controller
      * Sets current page title using Action
      * if $action is string then sets current $action param directly to view instance
      * Can be redefined in the view class with $this->title = 'New title'
+     *
      * @param \yii\base\Action|string $action
      */
     public function setTitle($action)
@@ -74,7 +76,7 @@ class BackendController extends Controller
             } else {
                 $title = $this->module->id;
             }
-            $title = Helper::humanize($title);
+            $title = Helper::titleize(Helper::id2camel($title));
         } else {
             $title = $action;
         }
@@ -82,14 +84,30 @@ class BackendController extends Controller
         $this->view->title = $title;
     }
 
+    /**
+     * @param Action $action
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
     public function beforeAction($action)
     {
         $this->breadcrumbs($action);
-        $this->setTitle($action);
+
+        // fix pjax title
+        if (!$this->isAjax()) {
+            $this->setTitle($action);
+        }
 
         return parent::beforeAction($action);
     }
 
+    /**
+     * Adds breadcrumb item
+     *
+     * @param $label
+     * @param null $link
+     * @param array $options
+     */
     public function addBreadcrumb($label, $link = null, $options = [])
     {
         $item = [
