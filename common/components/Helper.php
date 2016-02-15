@@ -43,4 +43,24 @@ class Helper extends Inflector
 
         return $result;
     }
+
+    /**
+     * Base class name from full namespace
+     * @link http://stackoverflow.com/questions/19901850/how-do-i-get-an-objects-unqualified-short-class-name
+     *
+     * @param string|object $class
+     * @return string
+     */
+    public static function getBaseClassName($class = null)
+    {
+        if (empty($class)) {
+            $className = get_called_class();
+        } else if (is_object($class)) {
+            $className = get_class($class);
+        } else {
+            $className = $class;
+        }
+
+        return substr(strrchr($className, '\\'), 1);
+    }
 }

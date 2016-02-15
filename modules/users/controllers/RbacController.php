@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Yii2-modular skeleton https://github.com/gigi/yii2-modular
+ *
+ * (c) Alexey Snigirev <http://github.com/gigi>
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace modules\users\controllers;
 
 use common\components\Helper;
@@ -7,7 +16,7 @@ use modules\users\components\ModuleController;
 use modules\users\models\AuthItem;
 use modules\users\models\Permissions;
 use modules\users\models\Roles;
-use yii\helpers\Url;
+use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
 
 class RbacController extends ModuleController
@@ -49,20 +58,97 @@ class RbacController extends ModuleController
     }
 
     /**
+     * Edit role
+     *
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionEditRole($id)
+    {
+        $model = $this->getRole($id);
+
+        return $this->renderEditForm($model);
+    }
+
+    /**
+     * Edit permission
+     *
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionEditPermission($id)
+    {
+        $model = $this->getPermission($id);
+
+        return $this->renderEditForm($model);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionDeletePermission($id)
+    {
+        $model = $this->getPermission($id);
+
+        if ($this->getAuthManager()->delete($model)) {
+            return $this->redirect(['rbac/index']);
+        }
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionDeleteRole($id)
+    {
+        $model = $this->getRole($id);
+
+        if ($this->getAuthManager()->delete($model)) {
+            return $this->redirect(['rbac/index']);
+        }
+    }
+
+    /**
      * @param AuthItem $model
      * @return string|\yii\web\Response
      */
     public function renderEditForm($model)
     {
-        if ($model->load($this->getRequest()->post()) && $model->save()) {
+        if ($model->load($this->getRequest()->post()) && $this->getAuthManager()->save($model)) {
             return $this->redirect(['rbac/index']);
         }
-
+        $children = $this->convertChildrenList($model->getPossibleChildrenArray());
+        $model->setChildren(array_keys($this->getAuthManager()->getChildren($model->getName())));
         $form = $this->renderPartial('_editForm', [
-            'model' => $model
+            'model' => $model,
+            'children' => $children
         ]);
 
         return $this->render('create', compact('form'));
+    }
+
+    /**
+     * Returns items formatted for Yii checkbox [name => label]
+     *
+     * @param array $children
+     * @return array
+     */
+    public function convertChildrenList($children)
+    {
+        $result = [];
+        foreach ($children as $child) {
+            $label = $child->getName();
+            if (!empty($child->getDescription())) {
+                $label .= Html::tag('small',  ' ('. $child->getDescription() . ')');
+            }
+            $typeLabel = $child->getLabel();
+            $result[$typeLabel][$child->getName()] = $label;
+        }
+
+        return $result;
     }
 
     /**
@@ -82,18 +168,38 @@ class RbacController extends ModuleController
         ]);
     }
 
-    public function actionEditRole($id)
+    /**
+     * Returns role item
+     *
+     * @param $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function getRole($id)
     {
-        $model = new Roles();
-        if (!$model->loadByName($id)) {
+        $role = $this->getAuthManager()->getRole($id);
+        if (empty($role)) {
             throw new NotFoundHttpException;
         }
 
-        $form = $this->renderPartial('_editForm', [
-            'model' => $model
-        ]);
+        return $role;
+    }
 
-        return $this->render('create', compact('form'));
+    /**
+     * Returns permission item
+     *
+     * @param $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function getPermission($id)
+    {
+        $permission = $this->getAuthManager()->getPermission($id);
+        if (empty($permission)) {
+            throw new NotFoundHttpException;
+        }
+
+        return $permission;
     }
 
     /**
@@ -104,9 +210,6 @@ class RbacController extends ModuleController
         $auth = \Yii::$app->authManager;
         $auth->removeAll();
 
-        $userRule = new \common\rbac\UserRule();
-        $auth->add($userRule);
-
         $createPost = $auth->createPermission('createPost');
         $createPost->description = 'Create new post';
         $auth->add($createPost);
@@ -114,6 +217,9 @@ class RbacController extends ModuleController
         $editUsers = $auth->createPermission('editUsers');
         $editUsers->description = 'Edit existing users';
         $auth->add($editUsers);
+
+        $userRule = new \common\rbac\UserRule();
+        $auth->add($userRule);
 
         $editProfile = $auth->createPermission('editProfile');
         $editProfile->description = 'Edit my profile via admin';

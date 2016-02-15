@@ -19,14 +19,14 @@ use yii\helpers\Html;
             'template' => '{edit} {delete}',
             'buttons' => [
                 'edit' => function ($url, $model, $key) use ($modelId) {
-                    $url = ['rbac/edit-' .  $modelId, 'id' => $model->name];
+                    $url = ['rbac/edit-' .  $modelId, 'id' => $model->getName()];
 
                     return Html::a('<span class="icon icon-pencil2"></span>', $url, [
                         'class' => 'table-action-button transition-bg btn btn-xs btn-default',
                     ]);
                 },
                 'delete' => function ($url, $model, $key) use ($modelId) {
-                    $url = ['rbac/delete-' .  $modelId, 'id' => $model->name];
+                    $url = ['rbac/delete-' .  $modelId, 'id' => $model->getName()];
 
                     return Html::a('<span class="icon icon-bin"></span>', $url, [
                         'class' => 'table-action-button transition-bg btn btn-xs btn-default',

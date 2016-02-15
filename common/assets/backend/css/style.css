@@ -81,7 +81,13 @@ Pixel perfect for row-based content
     display: block;
     overflow: hidden;
 }
-
+/**
+Forms
+*/
+.hint-block {
+    color: #636363;
+    font-size: .8em;
+}
 /*===================================================
 HEADER
 /*===================================================*/

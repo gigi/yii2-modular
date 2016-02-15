@@ -52,15 +52,4 @@ abstract class Module extends \yii\base\Module implements ModuleBootstrapInterfa
     {
         \Yii::$app->trigger($message, $event);
     }
-
-    /**
-     * Register menu items
-     *
-     * @param $key
-     * @param $items
-     */
-    public static function registerMenu($key, $items)
-    {
-        \Yii::$app->menu->add($key, $items);
-    }
 }

@@ -12,6 +12,8 @@ use common\base\Controller;
  */
 class BackendController extends Controller
 {
+    use BackendBehaviorTrait;
+
     public $defaultController = 'index';
 
     public function init()

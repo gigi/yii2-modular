@@ -2,7 +2,7 @@
 
 namespace common\components;
 
-trait AuthBehaviorTrait
+trait BackendBehaviorTrait
 {
     public function behaviors()
     {
@@ -12,7 +12,7 @@ trait AuthBehaviorTrait
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],

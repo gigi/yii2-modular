@@ -1,16 +1,26 @@
 <?php
 
+/*
+ * This file is part of the Yii2-modular skeleton https://github.com/gigi/yii2-modular
+ *
+ * (c) Alexey Snigirev <http://github.com/gigi>
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace modules\users\models;
+
+use \yii\rbac\Item;
 
 class Permissions extends AuthItem
 {
     /**
-     * @param $name
-     * @return null|\yii\rbac\Role
+     * @inheritdoc
      */
-    public function findByName($name)
+    public function getType()
     {
-        return $this->getAuthManager()->getPermission($name);
+        return Item::TYPE_PERMISSION;
     }
 
     /**
@@ -30,6 +40,7 @@ class Permissions extends AuthItem
     }
 
     /**
+     * TODO: move to AuthManager
      * @inheritdoc
      */
     public function getModels()
@@ -38,10 +49,13 @@ class Permissions extends AuthItem
     }
 
     /**
+     * TODO: move to AuthManager
      * @inheritdoc
      */
-    public function createItem($name)
+    public function getPossibleChildrenArray()
     {
-        return $this->getAuthManager()->createPermission($name);
+        $items = $this->getAuthManager()->getItems($this->getType(), $this->getName());
+
+        return $items;
     }
 }

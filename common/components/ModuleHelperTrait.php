@@ -2,6 +2,7 @@
 
 namespace common\components;
 
+use common\base\Event;
 use yii\base\InvalidValueException;
 
 /**
@@ -25,5 +26,21 @@ trait ModuleHelperTrait
         }
 
         return \Yii::$app->getModule($parts[1]);
+    }
+
+    /**
+     * Register menu items
+     *
+     * @param $key
+     * @param $items
+     */
+    public static function registerMenu($key, $items)
+    {
+        \Yii::$app->menu->add($key, $items);
+    }
+
+    public function publish(Event $message)
+    {
+        //TODO: event handler..
     }
 }
