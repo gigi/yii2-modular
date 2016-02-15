@@ -13,7 +13,7 @@ body {
 /*
 Common animations, hovers
 */
-.transition-bg {
+.transition-bg, .btn {
     transition: background 0.15s linear 0s, color 0.15s linear 0s;
 }
 /*
