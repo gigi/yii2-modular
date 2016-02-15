@@ -14,8 +14,8 @@ namespace modules\users\controllers;
 use common\components\Helper;
 use modules\users\components\ModuleController;
 use modules\users\models\AuthItem;
-use modules\users\models\Permissions;
-use modules\users\models\Roles;
+use modules\users\models\Permission;
+use modules\users\models\Role;
 use yii\helpers\Html;
 use yii\web\NotFoundHttpException;
 
@@ -28,8 +28,8 @@ class RbacController extends ModuleController
      */
     public function actionIndex()
     {
-        $rolesModel = new Roles();
-        $permissionsModel = new Permissions();
+        $rolesModel = new Role();
+        $permissionsModel = new Permission();
 
         $roles = $this->renderModels($rolesModel);
         $permissions = $this->renderModels($permissionsModel);
@@ -42,7 +42,7 @@ class RbacController extends ModuleController
      */
     public function actionCreateRole()
     {
-        $rolesModel = new Roles();
+        $rolesModel = new Role();
 
         return $this->renderEditForm($rolesModel);
     }
@@ -52,7 +52,7 @@ class RbacController extends ModuleController
      */
     public function actionCreatePermission()
     {
-        $permissionModel = new Permissions();
+        $permissionModel = new Permission();
 
         return $this->renderEditForm($permissionModel);
     }

@@ -15,7 +15,7 @@ use common\base\Model;
 use common\models\UserRecord;
 use yii\base\InvalidParamException;
 
-class Users extends Model
+class User extends Model
 {
     public $id;
     public $password;

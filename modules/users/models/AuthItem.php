@@ -36,7 +36,8 @@ abstract class AuthItem extends Model
     private $ruleName;
     private $children;
     private $data;
-    private $isNew;
+    private $isNew = true;
+    private $oldName;
 
     public function __construct($config = null)
     {
@@ -105,7 +106,7 @@ abstract class AuthItem extends Model
     {
         $exclude = null;
         if (!$this->getIsNew()) {
-            $exclude = $this->getId();
+            $exclude = $this->getOldName();
         }
         if ($this->getAuthManager()->getItem($this->getName(), $exclude)) {
             $this->addError('name', 'This name already used');
@@ -171,6 +172,23 @@ abstract class AuthItem extends Model
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setOldName($name)
+    {
+        $this->oldName = $name;
+    }
+
+    /**
+     * For item renaming
+     * @return mixed
+     */
+    public function getOldName()
+    {
+        return $this->oldName;
     }
 
     /**

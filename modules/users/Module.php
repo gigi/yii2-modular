@@ -25,6 +25,7 @@ class Module extends \common\base\Module
         $app->set('authManager', [
             'class' => AuthManager::className(),
         ]);
+
         static::registerMenu('admin', [
             [
                 'label' => '<i class="nav-list__item-icon icon icon-users"></i>Users',
@@ -33,6 +34,11 @@ class Module extends \common\base\Module
                     [
                         'label' => 'Create',
                         'url' => ['/users/index/create']
+                    ],
+                    [
+                        'label' => 'Edit',
+                        'url' => ['/users/index/edit'],
+                        'hide' => true
                     ],
                     [
                         'label' => 'Rbac',

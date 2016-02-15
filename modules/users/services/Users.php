@@ -13,7 +13,7 @@ namespace modules\users\services;
 
 use common\exceptions\UserNotFoundException;
 use \common\models\UserRecord;
-use \modules\users\models\Users as UserModel;
+use \modules\users\models\User as UserModel;
 use \yii\base\Object;
 
 /**

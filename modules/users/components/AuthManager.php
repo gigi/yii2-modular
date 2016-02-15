@@ -12,8 +12,8 @@
 namespace modules\users\components;
 
 use modules\users\models\AuthItem;
-use modules\users\models\Permissions;
-use modules\users\models\Roles;
+use modules\users\models\Permission;
+use modules\users\models\Role;
 use yii\base\InvalidParamException;
 use yii\rbac\DbManager;
 use yii\db\Query;
@@ -88,7 +88,7 @@ class AuthManager extends DbManager
     public function getRole($name)
     {
         $item = $this->getItem($name);
-        return $item instanceOf AuthItem && $item->type == Item::TYPE_ROLE ? $item : null;
+        return ($item instanceOf AuthItem || $item instanceOf Item) && $item->type == Item::TYPE_ROLE ? $item : null;
     }
 
     /**
@@ -97,7 +97,7 @@ class AuthManager extends DbManager
     public function getPermission($name)
     {
         $item = $this->getItem($name);
-        return $item instanceof AuthItem && $item->type == Item::TYPE_PERMISSION ? $item : null;
+        return ($item instanceOf AuthItem || $item instanceOf Item) && $item->type == Item::TYPE_PERMISSION ? $item : null;
     }
 
     /**
@@ -144,7 +144,7 @@ class AuthManager extends DbManager
 
     public function populateItem($row)
     {
-        $class = $row['type'] == Item::TYPE_PERMISSION ? Permissions::className() : Roles::className();
+        $class = $row['type'] == Item::TYPE_PERMISSION ? Permission::className() : Role::className();
 
         if (!isset($row['data']) || ($data = @unserialize($row['data'])) === false) {
             $data = null;
@@ -157,6 +157,7 @@ class AuthManager extends DbManager
         return new $class([
             'isNew' => false,
             'name' => $row['name'],
+            'oldName' => $row['name'],
             'description' => $row['description'],
             'ruleName' => $row['rule_name'],
             'ruleClass' => !empty($rule) ? get_class($rule) : null,
@@ -189,7 +190,7 @@ class AuthManager extends DbManager
         if ($model->getIsNew()) {
             $model->getAuthManager()->add($model);
         } else {
-            $model->getAuthManager()->update($model->getId(), $model);
+            $model->getAuthManager()->update($model->getOldName(), $model);
         }
 
         try {
@@ -225,7 +226,7 @@ class AuthManager extends DbManager
      */
     public function delete($model)
     {
-        return $this->remove($model->getName());
+        return $this->remove($model);
     }
 
 }

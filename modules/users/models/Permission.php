@@ -11,16 +11,16 @@
 
 namespace modules\users\models;
 
-use yii\rbac\Item;
+use \yii\rbac\Item;
 
-class Roles extends AuthItem
+class Permission extends AuthItem
 {
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getType()
     {
-        return Item::TYPE_ROLE;
+        return Item::TYPE_PERMISSION;
     }
 
     /**
@@ -28,7 +28,7 @@ class Roles extends AuthItem
      */
     public function getLabel()
     {
-        return 'Roles';
+        return 'Permissions';
     }
 
     /**
@@ -36,22 +36,26 @@ class Roles extends AuthItem
      */
     public function getUniqueId()
     {
-        return 'role';
+        return 'permission';
     }
 
     /**
+     * TODO: move to AuthManager
      * @inheritdoc
      */
     public function getModels()
     {
-        return $this->getAuthManager()->getRoles();
+        return $this->getAuthManager()->getPermissions();
     }
 
     /**
+     * TODO: move to AuthManager
      * @inheritdoc
      */
     public function getPossibleChildrenArray()
     {
-        return $this->getAuthManager()->getItems(null, $this->getName());
+        $items = $this->getAuthManager()->getItems($this->getType(), $this->getName());
+
+        return $items;
     }
 }
